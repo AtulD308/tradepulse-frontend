@@ -40,11 +40,11 @@ const SideBar = ({ isSheet, isCollapsed = false, onToggleCollapse }) => {
   };
 
   return (
-    <div className={`flex flex-col h-full bg-surface-container-low border-r border-outline-variant transition-all duration-300 ${
+    <div className={`flex flex-col h-full overflow-hidden bg-surface-container-low border-r border-outline-variant transition-all duration-300 ${
       isCollapsed ? "p-2 gap-4" : "p-4 gap-2"
     }`}>
       {/* Live Connection Header Section */}
-      <div className={`px-4 py-4 mb-4 flex items-center ${isCollapsed ? "justify-center" : "gap-3"}`}>
+      <div className={`px-4 py-4 mb-4 flex items-center shrink-0 ${isCollapsed ? "justify-center" : "gap-3"}`}>
         {!isCollapsed ? (
           <div className="text-left">
             <h2 className="text-sm font-bold text-primary font-title-sm flex items-center gap-2">
@@ -60,12 +60,12 @@ const SideBar = ({ isSheet, isCollapsed = false, onToggleCollapse }) => {
         )}
       </div>
 
-      {/* Navigation Menu */}
-      <nav className={`flex-1 flex flex-col ${isCollapsed ? "gap-3" : "gap-1.5"}`}>
+      {/* Navigation Menu — scrollable when viewport is small or zoomed */}
+      <nav className={`flex-1 min-h-0 flex flex-col overflow-y-auto custom-scrollbar ${isCollapsed ? "gap-3" : "gap-1.5"}`}>
         {menu.map((item) => {
           const isActive = location.pathname === item.path;
           return (
-            <div key={item.name} className="w-full">
+            <div key={item.name} className="w-full shrink-0">
               <SidebarWrapper isSheet={isSheet}>
                 <button
                   onClick={() => handleMenuClick(item)}
@@ -95,8 +95,8 @@ const SideBar = ({ isSheet, isCollapsed = false, onToggleCollapse }) => {
         })}
       </nav>
 
-      {/* Deposit Funds Action Footer */}
-      <div className="mt-auto flex flex-col gap-2 pt-4 border-t border-outline-variant">
+      {/* Deposit Funds Action Footer — always visible, never scrolled away */}
+      <div className="mt-auto flex flex-col gap-2 pt-4 border-t border-outline-variant shrink-0">
         <SidebarWrapper isSheet={isSheet}>
           <button
             onClick={() => navigate("/wallet")}

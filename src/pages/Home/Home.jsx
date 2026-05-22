@@ -30,7 +30,6 @@ import {
   Send, 
   Terminal, 
   Newspaper, 
-  BookOpen, 
   ExternalLink, 
   ArrowUpRight, 
   ShieldCheck, 
@@ -38,8 +37,7 @@ import {
   ChevronRight,
   Bookmark,
   Share2,
-  ArrowRight,
-  Shield
+  ArrowRight
 } from "lucide-react";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { sendMessage } from "@/Redux/Chat/Action";
@@ -162,167 +160,82 @@ const FearGreedIndex = () => {
       </div>
     </div>
   );
-};const LEARN_COURSES = [
-  {
-    id: "order-book",
-    tag: "Beginner",
-    duration: "5 min read",
-    icon: "BookOpen",
-    title: "Understanding Order Book Velocity & Depth",
-    description: "Deconstruct Level 2 trading grids, order matching algorithms, bid-ask spreads, and identifying whale accumulation walls.",
-    content: [
-      "Order books are the reactive heartbeat of all liquid markets. Rather than looking at simple line charts, institutional proprietary desks evaluate the two-sided limit order queue to measure shifting supply and demand pressure.",
-      "### Core Components of Level 2 Data",
-      "Level 2 data provides the full depth of the market by displaying the quantity of bids (buyers) and asks (sellers) clustered at specific price boundaries. Analyzing these zones reveals where large market participants are placing limit orders.",
-      "1. Bid Depth: The aggregate volume of buy limit orders waiting below the current spread.",
-      "2. Ask Depth: The aggregate volume of sell limit orders waiting above the spread.",
-      "3. The Spread: The structural gap between the highest active bid and the lowest active ask.",
-      "### Order Book Imbalance Formula",
-      "We can mathematically model the immediate buying/selling velocity bias by evaluating the Volume Imbalance (VI) ratio:",
-      "```\nVI = (Bid Volume - Ask Volume) / (Bid Volume + Ask Volume)\n```",
-      "A high positive VI (e.g. > +0.3) indicates significant buy interest stacking at near-market ranges, suggesting an imminent short-term upward price pressure.",
-      "### Spotting Liquidity Walls",
-      "Whales and market-making desks often place large structural limit blocks (known as 'walls') to defend key levels or accumulate positions without triggering slippage. Watch for static volume clusters on the depth chart to locate true support grids."
-    ]
-  },
-  {
-    id: "ai-signals",
-    tag: "Advanced",
-    duration: "8 min read",
-    icon: "Sparkles",
-    title: "Trading with AI-Generated Sentiment Vectors",
-    description: "Learn how to parse natural language processing (NLP) models, social volume rates, and incorporate AI signals into RSI trends.",
-    content: [
-      "In the modern fintech era, trading is no longer limited to standard mathematical averages. Natural Language Processing (NLP) models parse thousands of media streams, regulatory filings, and social channels per second to formulate sentiment trends.",
-      "### What is a Sentiment Vector?",
-      "A sentiment vector is a multidimensional score computed by neural network models that measures the momentum and velocity of market discussions. TradePulse's sentiment parser processes these scores into three indices:",
-      "1. Hype Index: The raw volume velocity of asset mentions.",
-      "2. Polarity Score: The negative-to-positive ratio of sentiment (ranging from -1.0 to +1.0).",
-      "3. Fear & Greed Index: An aggregated dial capturing order book imbalances, volatility changes, and sentiment vectors.",
-      "### Neural Signal Indicator Strategy",
-      "Advanced quantitative strategies combine standard oscillators with sentiment polarity thresholds. Below is a mock algorithmic ledger:",
-      "```javascript\n// Neural-RSI Overbought Filter\nif (RSI_4H < 30 && AISentimentPolarity > 0.45) {\n  triggerSignal('STRONG_BUY');\n} else if (RSI_4H > 70 && AISentimentPolarity < -0.30) {\n  triggerSignal('STRONG_SELL');\n}\n```",
-      "### Avoiding Sentiment Traps",
-      "Be cautious of sudden social hype surges that lack corresponding order book volume. A retail sentiment spike without institutional spot order book buying represents a retail liquidity trap, which often results in sudden liquidation cascades."
-    ]
-  },
-  {
-    id: "risk-calibration",
-    tag: "Intermediate",
-    duration: "6 min read",
-    icon: "Shield",
-    title: "Dynamic Volatility Stop-Loss Calibration",
-    description: "Safeguard trading capital during systemic market cascades using the Kelly Criterion and Average True Range (ATR) models.",
-    content: [
-      "Surviving high-volatility liquidations is the absolute priority of professional asset management. Without systematic risk parameters, even the most accurate trading algorithms will inevitably experience capital ruin.",
-      "### The Kelly Criterion Model",
-      "The Kelly Criterion is an allocation sizing formula designed to maximize the long-term compounding rate of capital by balancing win probability against payout ratios:",
-      "```\nKelly Fraction (f*) = (p * b - q) / b\n```",
-      "Where:\n- p = Probability of win\n- q = Probability of loss (1 - p)\n- b = Payout ratio (Profit / Loss)",
-      "Always employ a 'fractional Kelly' (e.g. 0.25f*) to safeguard against variance and model estimation errors.",
-      "### ATR-Based Stop-Loss Placement",
-      "Fixed percentage stop-losses (e.g. always placing stops at -2%) fail to account for current market volatility. Instead, calibrate stop offsets using the Average True Range (ATR) indicator over a 14-period window.",
-      "```\nStop-Loss Distance = Entry Price - (2.5 * ATR_14)\n```",
-      "This ensures your stop lies outside standard noise levels, preventing you from being prematurely shaken out of positions during volatile sweeps."
-    ]
-  }
-];
-
-const LearnIcon = ({ name, className }) => {
-  if (name === "BookOpen") return <BookOpen className={className} />;
-  if (name === "Sparkles") return <Sparkles className={className} />;
-  if (name === "Shield") return <Shield className={className} />;
-  return <BookOpen className={className} />;
 };
 
 const levelDetails = {
-  beginner: {
-    title: "Understanding Order Book Depth",
+  btc: {
+    title: "Bitcoin (BTC) Sentiment Profile",
     colorClass: "from-[#00ffa3]/10 to-teal-500/5 hover:border-[#00ffa3]/30",
     glowClass: "bg-[#00ffa3]/5",
     badgeColor: "bg-[#00ffa3]/15 text-[#00ffa3] border-[#00ffa3]/30",
-    summary: "Master bid-ask spreads, order book imbalance ratio, and identifying key accumulation zones.",
-    cta: "Launch Depth Academy Module",
-    courseIndex: 0
+    summary: "Strong institutional accumulation and positive social hype are keeping Bitcoin in a highly bullish phase.",
+    socialHype: "High (84/100)",
+    whaleStance: "Bullish Accumulation",
+    outlook: "Highly Bullish"
   },
-  intermediate: {
-    title: "Dynamic Volatility Stop-Loss Calibration",
+  eth: {
+    title: "Ethereum (ETH) Sentiment Profile",
     colorClass: "from-[#00e290]/10 to-blue-500/5 hover:border-[#00e290]/30",
     glowClass: "bg-[#00e290]/5",
     badgeColor: "bg-[#00e290]/15 text-[#00e290] border-[#00e290]/30",
-    summary: "Limit drawdown and systematic risk using Kelly Criterion and Average True Range (ATR) models.",
-    cta: "Calibrate Stop-Loss Simulator",
-    courseIndex: 2
+    summary: "Steady network utility and growing retail interest indicate solid medium-term support despite near-term volatility.",
+    socialHype: "Moderate (67/100)",
+    whaleStance: "Steady Holding",
+    outlook: "Mildly Bullish"
   },
-  advanced: {
-    title: "AI Sentiment Polarity Vectors",
+  sol: {
+    title: "Solana (SOL) Sentiment Profile",
     colorClass: "from-purple-500/10 to-fuchsia-500/5 hover:border-purple-500/30",
     glowClass: "bg-purple-500/5",
     badgeColor: "bg-purple-500/15 text-purple-300 border-purple-500/30",
-    summary: "Leverage natural language processing streams, sentiment vectors, and social hype signals in your strategy.",
-    cta: "Optimize Neural Signal Engine",
-    courseIndex: 1
+    summary: "Massive decentralized finance (DeFi) activity and social media buzz are driving extreme near-term momentum.",
+    socialHype: "Extreme (92/100)",
+    whaleStance: "Aggressive Buy-ins",
+    outlook: "Very Bullish"
   }
 };
 
-const getLevelAdvice = (level, balance) => {
-  const isDemo = balance === undefined || balance === null || balance === 0;
-  const activeBalance = isDemo ? 10000 : balance;
-  const balanceStr = isDemo ? `$${activeBalance.toLocaleString()} (Demo)` : `$${activeBalance.toLocaleString()} (Live)`;
+const getLevelAdvice = (coin) => {
+  if (coin === "btc") {
+    return `>>> INITIATING BITCOIN (BTC) SENTIMENT ANALYSIS...
+[MARKET STANCE] Overall Sentiment: Highly Bullish (85% Positive)
 
-  if (level === "beginner") {
-    const maxRisk = (activeBalance * 0.01).toFixed(2);
-    const maxPos = (activeBalance * 0.10).toFixed(2);
-    return `>>> INITIATING BEGINNER LEVEL ADVISORY Telemetry...
-[ACCOUNT STANDING] Available Balance: ${balanceStr}
+[SOCIAL HYPE] 84/100 (High Activity)
+Social platforms show a strong surge in positive mentions. Discussions are focused on long-term value, spot ETF buying, and general market optimism rather than panic.
 
-[RULE 1] Capital Preservation is Priority #1. Never risk more than 1% to 2% of equity per trade.
-[CALCULATION] Maximum Risk Capital per trade: $${maxRisk}
-[CALCULATION] Suggested Maximum Position Size: $${maxPos} (10% allocation)
+[WHALE ACTIVITY] Active Accumulation
+Large wallets (whales) are moving their Bitcoin off exchanges into secure cold storage. This indicates they plan to hold for the long term, reducing immediate selling pressure.
 
-[STRATEGY] Spot Market Accumulation & Order Book Walls:
-1. Scan for key support blocks on major assets (BTC, ETH) by looking for whale buy walls in the Level 2 order depth.
-2. Avoid using leverage (keep leverage at 1x).
-3. Always place a hard Stop-Loss order immediately after trade execution.
-4. Aim for simple 1:2 risk-to-reward ratio setups.
+[RETAIL BEHAVIOR] FOMO (Fear of Missing Out) is building up gradually, but retail buyers remain mostly rational. Search trends are steady but not yet at bubble-like peaks.
 
-[NEXT STEP COMPASS] Focus on learning the "Understanding Order Book Velocity & Depth" module in TradePulse Academy.`;
-  } else if (level === "intermediate") {
-    const maxRisk = (activeBalance * 0.02).toFixed(2);
-    const posLimit = (activeBalance * 0.20).toFixed(2);
-    const atrBuffer = 2.5;
-    return `>>> INITIATING INTERMEDIATE LEVEL ADVISORY Telemetry...
-[ACCOUNT STANDING] Available Balance: ${balanceStr}
+[SUMMARY OUTLOOK] The market is feeling very optimistic. With institutional backing and strong holding behavior from big investors, the path of least resistance remains upward. Avoid emotional trading and watch major support levels.`;
+  } else if (coin === "eth") {
+    return `>>> INITIATING ETHEREUM (ETH) SENTIMENT ANALYSIS...
+[MARKET STANCE] Overall Sentiment: Moderately Bullish (72% Positive)
 
-[RULE 2] Dynamic Systematic Scaling. Limit max risk per trade to 2% under strict volatility stop parameters.
-[CALCULATION] Maximum Risk Capital per trade: $${maxRisk}
-[CALCULATION] Position Allocation Limit: $${posLimit} (20% allocation)
+[SOCIAL HYPE] 67/100 (Steady Interest)
+Social media sentiment is steady. Discussions revolve around low Layer-2 fees following the Dencun upgrade and Ethereum's secure position as the leading smart-contract platform.
 
-[STRATEGY] Volatility stop-loss calibration (Average True Range - ATR):
-1. Measure the 14-day ATR for the target coin before entry.
-2. Place stop-loss at exactly Entry Price - (${atrBuffer} * ATR). This prevents premature shakeouts from random noise.
-3. Calculate position size using standard risk formula: Position Size = Risk Capital / Stop-Loss Distance.
-4. Scale out of profitable trades using 50% partial take-profits at 1.5x and 3.0x ATR targets.
+[WHALE ACTIVITY] Solid Holding
+Whale addresses are keeping their funds stable, with slight accumulation noticed in decentralized staking pools. No signs of large panic selling.
 
-[NEXT STEP COMPASS] Master "Dynamic Volatility Stop-Loss Calibration" in TradePulse Academy to run advanced simulations.`;
+[RETAIL BEHAVIOR] Retail traders are actively using Ethereum scaling networks (like Base and Arbitrum) due to low fees, creating a strong utility foundation.
+
+[SUMMARY OUTLOOK] Solid, healthy sentiment. While Ethereum is not moving as fast as high-beta assets, its underlying usage and strong whale base provide a solid floor. A steady, reliable performer for patient market participants.`;
   } else {
-    const kellyFraction = 0.25;
-    const standardKellyRisk = (activeBalance * 0.05).toFixed(2);
-    const maxExposure = (activeBalance * 0.25).toFixed(2);
-    return `>>> INITIATING ADVANCED LEVEL ADVISORY Telemetry...
-[ACCOUNT STANDING] Available Balance: ${balanceStr}
+    return `>>> INITIATING SOLANA (SOL) SENTIMENT ANALYSIS...
+[MARKET STANCE] Overall Sentiment: Extremely Bullish (91% Positive)
 
-[RULE 3] Algorithmic compounding via Fractional Kelly Criterion and Sentiment Vectors.
-[CALCULATION] Maximum Kelly Exposure Size (25% f*): $${standardKellyRisk} (Assuming 55% Win Rate, 1:1.2 Payout)
-[CALCULATION] Max Portfolio Cap per trade: $${maxExposure} (25% maximum)
+[SOCIAL HYPE] 92/100 (Extreme Buzz)
+Solana is currently the most talked-about cryptocurrency across all social channels. High excitement around meme tokens, fast transactions, and extremely cheap fees is driving constant hype.
 
-[STRATEGY] AI-Generated Sentiment Vectors & Polarity Arbitrage:
-1. Ingest social polarity scores and volume hype index to overlay on 4-Hour RSI charts.
-2. Buy spot or long high-beta assets (SOL) only when the Polarity Score is > 0.45 and RSI is < 35 (extreme value accumulation).
-3. Short assets or scale out when Polarity drops below -0.30 and RSI is > 65.
-4. Monitor Level 2 volume imbalance ratio (VI) to confirm structural buying before scaling in.
+[WHALE ACTIVITY] Aggressive Buying
+On-chain data shows high-net-worth investors (whales) aggressively swapping other assets to buy Solana, supporting the rapid price rises.
 
-[NEXT STEP COMPASS] Master "Trading with AI-Generated Sentiment Vectors" in TradePulse Academy to backtest high-frequency systems.`;
+[RETAIL BEHAVIOR] High Retail Euphoria
+A huge number of active retail wallets are trading daily on Solana DEXs. Transaction counts are hitting records, showing high active retail engagement.
+
+[SUMMARY OUTLOOK] Extreme momentum. While the hype is incredibly strong and driving prices higher, keep in mind that high excitement can lead to sudden short-term price swings. A very high-reward but highly active market to navigate.`;
   }
 };
 
@@ -344,145 +257,14 @@ const Home = () => {
   const [aiPromptText, setAiPromptText] = useState("");
   const [aiTerminalText, setAiTerminalText] = useState("TradePulse Intelligence Node v1.2-AI initialized.\nReady to run technical sentiment and blockchain protocol queries...\nSelect a preset prompt below or type your custom analysis.");
   const [aiIsTyping, setAiIsTyping] = useState(false);
-  const [selectedLevel, setSelectedLevel] = useState("beginner");
+  const [selectedLevel, setSelectedLevel] = useState("btc");
   const [hasInitialTriggered, setHasInitialTriggered] = useState(false);
 
   // News details modal state
   const [selectedNews, setSelectedNews] = useState(null);
   const [isNewsModalOpen, setIsNewsModalOpen] = useState(false);
 
-  // Academy Drawer & Simulator States
-  const [isAcademyOpen, setIsAcademyOpen] = useState(false);
-  const [activeAcademyCourse, setActiveAcademyCourse] = useState(LEARN_COURSES[0]);
-  const [backtestRunning, setBacktestRunning] = useState(false);
-  const [backtestProgress, setBacktestProgress] = useState(0);
-  const [backtestLogs, setBacktestLogs] = useState([
-    "SIMULATOR READY: Awaiting Strategy Calibration..."
-  ]);
-  const [backtestMetrics, setBacktestMetrics] = useState({
-    trades: 0,
-    yield: 0.0,
-    profitFactor: 0.0,
-    winRate: 0
-  });
-  const [sliderValue1, setSliderValue1] = useState(0.35); // Imbalance Threshold or Sentiment Score or Stop ATR
-  const [sliderValue2, setSliderValue2] = useState(0.5);  // Orderbook Depth or NLP Weight or Kelly Fraction
-  const [backtestChartData, setBacktestChartData] = useState([0, 2, -1, 4, 8, 5, 12, 10, 18, 16, 25]);
-  const [selectedLearnArticle, setSelectedLearnArticle] = useState(null);
 
-  // Academy course change triggers custom calibration resets
-  useEffect(() => {
-    if (activeAcademyCourse.id === "order-book") {
-      setSliderValue1(0.35); // Imbalance Threshold (VI)
-      setSliderValue2(0.50); // Orderbook Depth (L2)
-      setBacktestChartData([0, 3, 1, 6, 9, 7, 13, 11, 16, 14, 21]);
-    } else if (activeAcademyCourse.id === "ai-signals") {
-      setSliderValue1(0.45); // Sentiment Shift Ratio
-      setSliderValue2(0.60); // NLP Social Volume weight
-      setBacktestChartData([0, 4, 2, 7, 12, 9, 16, 13, 22, 19, 28]);
-    } else {
-      setSliderValue1(2.50); // ATR Multiplier offset
-      setSliderValue2(0.25); // Kelly Risk sizing fraction
-      setBacktestChartData([0, 2, 0, 5, 8, 4, 11, 8, 14, 11, 18]);
-    }
-    
-    // Reset backtest info
-    setBacktestRunning(false);
-    setBacktestProgress(0);
-    setBacktestLogs([
-      `SIMULATOR CALIBRATED for Strategy: ${activeAcademyCourse.title.replace("Understanding ", "").replace("Trading with ", "")}`,
-      `Awaiting execution...`
-    ]);
-    setBacktestMetrics({
-      trades: 0,
-      yield: 0.0,
-      profitFactor: 0.0,
-      winRate: 0
-    });
-  }, [activeAcademyCourse]);
-
-  const handleRunBacktest = () => {
-    if (backtestRunning) return;
-    setBacktestRunning(true);
-    setBacktestProgress(0);
-    setBacktestChartData([0]);
-    
-    const logsSeed = [
-      `[INIT] INITIALIZING MONTE CARLO INSTANCE FOR STRATEGY: ${activeAcademyCourse.title.toUpperCase()}`,
-      `[LOAD] SCANNING EXCHANGE HISTORICAL LEDGER QUEUE...`,
-      `[CALIB] TUNING BLUEPRINT TO VALUES: PARAM_A = ${sliderValue1}, PARAM_B = ${sliderValue2}`,
-      `[TEST] INGESTING LEVEL-2 DEPTH VELOCITY DATA FOR ALL PAIRS...`,
-      `[TEST] EVALUATING 10,000 TICK SAMPLES...`,
-      `[CALC] STRATEGY EVALUATION COMPLETE. ASSEMBLING METRIC VECTORS...`
-    ];
-
-    setBacktestLogs([logsSeed[0]]);
-
-    let count = 0;
-    const interval = setInterval(() => {
-      count += 1;
-      const progress = count * 20; // 5 steps total
-      setBacktestProgress(progress);
-      
-      // Append log message
-      if (count < logsSeed.length) {
-        setBacktestLogs(prev => [...prev, logsSeed[count]]);
-      }
-
-      // Append dummy simulation chart data steps
-      setBacktestChartData(prev => {
-        const next = [...prev];
-        const last = next[next.length - 1];
-        // Strategy performance influenced slightly by slider variables
-        let multiplier = 1;
-        if (activeAcademyCourse.id === "order-book") {
-          multiplier = (sliderValue1 > 0.3 && sliderValue1 < 0.6) ? 1.4 : 0.8;
-        } else if (activeAcademyCourse.id === "ai-signals") {
-          multiplier = (sliderValue2 > 0.4 && sliderValue2 < 0.8) ? 1.5 : 0.7;
-        } else {
-          multiplier = (sliderValue2 > 0.1 && sliderValue2 < 0.4) ? 1.6 : 0.5;
-        }
-
-        const variance = (Math.random() * 8 - 3) * multiplier;
-        next.push(Math.round((last + variance) * 10) / 10);
-        return next;
-      });
-
-      if (count >= 5) {
-        clearInterval(interval);
-        setBacktestRunning(false);
-        
-        // Compute final metrics based on inputs
-        let winRate = 50;
-        let profitFactor = 1.1;
-        let finalYield = 10.0;
-        
-        if (activeAcademyCourse.id === "order-book") {
-          winRate = Math.round(52 + sliderValue1 * 20 + Math.random() * 5);
-          profitFactor = (1.1 + sliderValue2 * 1.5 + Math.random() * 0.2).toFixed(2);
-          finalYield = (12.5 + sliderValue1 * 40 - sliderValue2 * 10).toFixed(1);
-        } else if (activeAcademyCourse.id === "ai-signals") {
-          winRate = Math.round(55 + sliderValue2 * 18 + Math.random() * 6);
-          profitFactor = (1.2 + sliderValue1 * 1.3 + Math.random() * 0.3).toFixed(2);
-          finalYield = (15.0 + sliderValue2 * 35 + sliderValue1 * 8).toFixed(1);
-        } else {
-          winRate = Math.round(48 + sliderValue1 * 15 + Math.random() * 4);
-          profitFactor = (1.0 + (1 - sliderValue2) * 1.8 + Math.random() * 0.2).toFixed(2);
-          const kellyRisk = sliderValue2;
-          finalYield = (8.0 + kellyRisk * 65 * (winRate > 52 ? 1 : -0.8)).toFixed(1);
-        }
-
-        setBacktestMetrics({
-          trades: Math.round(150 + Math.random() * 80),
-          yield: parseFloat(finalYield),
-          profitFactor: parseFloat(profitFactor),
-          winRate: winRate
-        });
-
-        setBacktestLogs(prev => [...prev, `[COMPLETE] BACKTEST DONE. PROCESSED LEDGER SUCCESSFULLY. TOTAL YIELD = +${finalYield}%`]);
-      }
-    }, 800);
-  };
 
 
   const toggleSidebar = () => {
@@ -529,7 +311,7 @@ const Home = () => {
     if (wallet?.userWallet?.balance !== undefined && !hasInitialTriggered) {
       setHasInitialTriggered(true);
       setTimeout(() => {
-        triggerAiResponse("beginner");
+        triggerAiResponse("btc_sentiment");
       }, 500);
     }
   }, [wallet?.userWallet, hasInitialTriggered]);
@@ -647,10 +429,10 @@ const Home = () => {
     let textToStream = "";
     let displayPrompt = "";
     
-    if (promptKey === "beginner" || promptKey === "intermediate" || promptKey === "advanced") {
-      const balance = wallet?.userWallet?.balance;
-      textToStream = getLevelAdvice(promptKey, balance);
-      displayPrompt = `Generate customized AI risk parameters and trading directives for level: ${promptKey.toUpperCase()}`;
+    if (promptKey.endsWith("_sentiment")) {
+      const coinKey = promptKey.split("_")[0];
+      textToStream = getLevelAdvice(coinKey);
+      displayPrompt = `Generate real-time AI market sentiment analysis for ${coinKey.toUpperCase()}`;
     } else if (promptKey === "custom") {
       if (!customPromptValue.trim()) return;
       displayPrompt = customPromptValue;
@@ -933,27 +715,7 @@ const Home = () => {
             ))}
           </div>
 
-          {/* Learn Crypto Callout Banner */}
-          <div className="mt-10 p-6 rounded-2xl bg-gradient-to-r from-[#00ffa3]/10 to-teal-500/5 border border-outline-variant/30 flex flex-col md:flex-row justify-between items-start md:items-center gap-6 relative overflow-hidden">
-            <div className="absolute right-0 top-0 w-64 h-64 bg-[#00ffa3]/5 blur-3xl rounded-full pointer-events-none"></div>
-            <div>
-              <div className="flex items-center gap-1.5 text-[#00ffa3] font-bold text-xs uppercase tracking-wider">
-                <BookOpen className="w-4 h-4" />
-                <span>TradePulse Academy</span>
-              </div>
-              <h3 className="text-base font-bold text-primary mt-1">New to digital assets? Explore our curated learning tracks</h3>
-              <p className="text-xs text-on-surface-variant leading-relaxed mt-1 max-w-xl">
-                Master blockchain protocols, decentralized finance telemetry, risk management formulas, and technical indicators from our comprehensive guide.
-              </p>
-            </div>
-            <button 
-              onClick={() => setIsAcademyOpen(true)}
-              className="bg-surface-bright text-primary border border-outline-variant px-5 py-2.5 rounded-xl text-xs font-bold hover:bg-[#323538] hover:text-white transition-all flex items-center gap-2 whitespace-nowrap self-start md:self-center"
-            >
-              Start Learning
-              <ChevronRight className="w-3.5 h-3.5" />
-            </button>
-          </div>
+
         </section>
 
         {/* Fold 3: Premium AI Market Insights Section */}
@@ -997,16 +759,16 @@ const Home = () => {
 
               {/* Premium Experience Level Selector Tab Group */}
               <div className="flex bg-[#0b0e11] border border-outline-variant/30 rounded-xl p-1 mb-4 w-full">
-                {["beginner", "intermediate", "advanced"].map((level) => {
-                  const isActive = selectedLevel === level;
-                  const label = level === "beginner" ? "🔰 Beginner" : level === "intermediate" ? "⚡ Intermediate" : "🔮 Advanced";
+                {["btc", "eth", "sol"].map((coin) => {
+                  const isActive = selectedLevel === coin;
+                  const label = coin === "btc" ? "🪙 Bitcoin (BTC)" : coin === "eth" ? "🔷 Ethereum (ETH)" : "☀️ Solana (SOL)";
                   return (
                     <button
-                      key={level}
+                      key={coin}
                       disabled={aiIsTyping}
                       onClick={() => {
-                        setSelectedLevel(level);
-                        triggerAiResponse(level);
+                        setSelectedLevel(coin);
+                        triggerAiResponse(coin + "_sentiment");
                       }}
                       className={`flex-1 py-2 text-center text-xs font-bold rounded-lg transition-all duration-300 disabled:opacity-50 ${
                         isActive
@@ -1076,12 +838,7 @@ const Home = () => {
 
               {/* Dynamic AI Trading Compass Card */}
               {(() => {
-                const activeDetails = levelDetails[selectedLevel || "beginner"];
-                const balance = wallet?.userWallet?.balance || 0;
-                const isDemo = balance === 0;
-                const activeBalance = isDemo ? 10000 : balance;
-                const maxRiskVal = (activeBalance * (selectedLevel === "beginner" ? 0.01 : selectedLevel === "intermediate" ? 0.02 : 0.05)).toFixed(2);
-                const maxPosVal = (activeBalance * (selectedLevel === "beginner" ? 0.10 : selectedLevel === "intermediate" ? 0.20 : 0.25)).toFixed(2);
+                const activeDetails = levelDetails[selectedLevel || "btc"];
 
                 return (
                   <div className={`mt-2 p-5 rounded-2xl bg-gradient-to-r ${activeDetails.colorClass} border border-outline-variant/30 relative overflow-hidden transition-all duration-300 group/compass shadow-md text-left`}>
@@ -1092,10 +849,10 @@ const Home = () => {
                         <div className="flex items-center gap-2 mb-2 flex-wrap">
                           <Sparkles className="w-4 h-4 text-[#00ffa3] animate-pulse" />
                           <span className={`px-2 py-0.5 rounded text-[9px] font-black tracking-wider uppercase border ${activeDetails.badgeColor}`}>
-                            {(selectedLevel || "beginner").toUpperCase()} STRATEGY
+                            {(selectedLevel || "btc").toUpperCase()} SENTIMENT
                           </span>
                           <span className="text-[10px] text-on-surface-variant font-data-mono font-medium bg-black/30 px-2 py-0.5 rounded border border-outline-variant/10">
-                            {isDemo ? "Demo Account Allocations" : "Live Account Risk"}
+                            Real-Time Outlook
                           </span>
                         </div>
                         
@@ -1107,33 +864,30 @@ const Home = () => {
                           {activeDetails.summary}
                         </p>
 
-                        {/* Dynamic Sizing Indicators */}
-                        <div className="grid grid-cols-2 gap-4 mt-3 max-w-md bg-black/40 border border-outline-variant/20 rounded-xl p-3 font-data-mono">
+                        {/* Dynamic Sentiment Indicators */}
+                        <div className="grid grid-cols-3 gap-4 mt-3 max-w-md bg-black/40 border border-outline-variant/20 rounded-xl p-3 font-data-mono">
                           <div>
-                            <span className="text-[9px] text-on-surface-variant block font-bold uppercase tracking-wider">Safe Risk Capital (Per Setup)</span>
-                            <span className="text-xs font-black text-[#00ffa3] mt-0.5">
-                              ${parseFloat(maxRiskVal).toLocaleString()}
+                            <span className="text-[9px] text-on-surface-variant block font-bold uppercase tracking-wider">Social Hype</span>
+                            <span className="text-xs font-black text-[#00ffa3] mt-0.5 block">
+                              {activeDetails.socialHype}
                             </span>
                           </div>
                           <div>
-                            <span className="text-[9px] text-on-surface-variant block font-bold uppercase tracking-wider">Suggested Exposure Cap</span>
-                            <span className="text-xs font-black text-[#00e290] mt-0.5">
-                              ${parseFloat(maxPosVal).toLocaleString()}
+                            <span className="text-[9px] text-on-surface-variant block font-bold uppercase tracking-wider">Whale Stance</span>
+                            <span className="text-xs font-black text-[#00e290] mt-0.5 block">
+                              {activeDetails.whaleStance}
+                            </span>
+                          </div>
+                          <div>
+                            <span className="text-[9px] text-on-surface-variant block font-bold uppercase tracking-wider">Overall Outlook</span>
+                            <span className="text-xs font-black text-[#00e290] mt-0.5 block">
+                              {activeDetails.outlook}
                             </span>
                           </div>
                         </div>
                       </div>
                       
-                      <button 
-                        onClick={() => {
-                          setActiveAcademyCourse(LEARN_COURSES[activeDetails.courseIndex]);
-                          setIsAcademyOpen(true);
-                        }}
-                        className="bg-surface-bright text-primary border border-outline-variant px-5 py-3 rounded-xl text-xs font-extrabold hover:bg-[#323538] hover:text-white transition-all flex items-center gap-2 whitespace-nowrap self-start md:self-center hover:shadow-[0_0_15px_rgba(0,255,163,0.15)] group-hover/compass:border-[#00ffa3]/40"
-                      >
-                        {activeDetails.cta}
-                        <ChevronRight className="w-3.5 h-3.5 group-hover/compass:translate-x-0.5 transition-transform" />
-                      </button>
+
                     </div>
                   </div>
                 );
@@ -1455,452 +1209,9 @@ const Home = () => {
         </div>
       )}
 
-      {/* ====================================================
-          TradePulse Academy Drawer Slide-Down Fullscreen Overlay
-          ==================================================== */}
-      {isAcademyOpen && (
-        <div className="fixed inset-0 z-50 bg-[#04090c]/98 backdrop-blur-xl flex flex-col overflow-y-auto animate-fade-in transition-all duration-300 select-text">
-          {/* Header Bar */}
-          <div className="w-full max-w-7xl mx-auto px-6 py-6 border-b border-white/5 flex items-center justify-between sticky top-0 bg-[#04090c]/95 backdrop-blur-md z-20">
-            <div className="flex items-center gap-3">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#00ffa3]/10 border border-[#00ffa3]/25 text-[#00ffa3] text-[10px] font-extrabold uppercase tracking-widest">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#00ffa3] animate-pulse" />
-                Academy Console
-              </div>
-              <span className="text-xs text-[#8aa898] font-medium hidden sm:inline">/ Algorithmic Quantum Learning Tracks</span>
-            </div>
-            <button 
-              onClick={() => setIsAcademyOpen(false)}
-              className="px-4 py-2 rounded-xl bg-white/5 border border-white/10 text-xs font-bold text-white hover:bg-white/10 active:scale-95 transition-all"
-            >
-              ✕ Close Console
-            </button>
-          </div>
 
-          <div className="w-full max-w-7xl mx-auto px-6 py-12 flex-1 text-left">
-            <div className="relative z-10 flex flex-col items-start text-left mb-10">
-              <h2 className="text-2xl sm:text-4xl font-extrabold text-white tracking-tight leading-tight">
-                Master Platform Volatility
-                <span className="block mt-1.5 bg-gradient-to-r from-[#00ffa3] via-[#00e5a0] to-[#00ffa3] bg-clip-text text-transparent text-lg sm:text-2xl font-bold">
-                  Quantitative Algorithmic Simulators
-                </span>
-              </h2>
-            </div>
 
-            {/* Responsive Academy Dashboard Grid */}
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 relative z-10 items-stretch">
-              {/* Left Column (col-span-5): Vertical Courses Deck */}
-              <div className="lg:col-span-5 flex flex-col gap-4">
-                {LEARN_COURSES.map((course) => {
-                  const isActive = activeAcademyCourse.id === course.id;
-                  return (
-                    <div
-                      key={course.id}
-                      onClick={() => setActiveAcademyCourse(course)}
-                      className={`border rounded-2xl p-5 relative overflow-hidden transition-all duration-300 group cursor-pointer text-left flex flex-col justify-between min-h-[170px] ${
-                        isActive
-                          ? "border-[#00ffa3]/50 shadow-[0_0_20px_rgba(0,255,163,0.1)] bg-[#0c1419]/95"
-                          : "border-white/5 bg-[#080d10]/60 hover:border-white/10 hover:bg-[#0c1419]/40"
-                      }`}
-                    >
-                      {/* Subtle active glow line on top */}
-                      <div className={`absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-[#00ffa3]/50 to-transparent transition-all duration-300 ${isActive ? "opacity-100" : "opacity-0 group-hover:opacity-100"}`} />
 
-                      <div>
-                        {/* Header: Icon + Metadata */}
-                        <div className="flex items-center justify-between mb-3">
-                          <div className={`w-8 h-8 rounded-lg flex items-center justify-center transition-colors ${isActive ? "bg-[#00ffa3]/15 text-[#00ffa3]" : "bg-white/5 text-[#8aa898]"}`}>
-                            <LearnIcon name={course.icon} className="w-4.5 h-4.5" />
-                          </div>
-                          <div className="flex items-center gap-2">
-                            <span className={`px-1.5 py-0.5 rounded text-[8px] font-bold tracking-wider uppercase bg-white/5 border text-[#8aa898] ${isActive ? "border-[#00ffa3]/20 text-[#00ffa3]" : "border-white/10"}`}>
-                              {course.tag}
-                            </span>
-                            <span className="text-[9px] text-[#5a7a6a] font-bold font-data-mono uppercase tracking-wider">
-                              {course.duration}
-                            </span>
-                          </div>
-                        </div>
-
-                        {/* Content */}
-                        <h3 className={`text-base font-extrabold transition-colors leading-snug ${isActive ? "text-[#00ffa3]" : "text-white"}`}>
-                          {course.title}
-                        </h3>
-                        <p className="text-xs text-[#8aa898] leading-relaxed mt-1.5 line-clamp-2">
-                          {course.description}
-                        </p>
-                      </div>
-
-                      {/* Actions footer */}
-                      <div className="mt-4 pt-3 border-t border-white/5 flex items-center justify-between text-[9px] font-bold uppercase tracking-wider font-data-mono">
-                        <span className="text-[#5a7a6a]">Module Blueprint</span>
-                        <button
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            setSelectedLearnArticle(course);
-                          }}
-                          className={`flex items-center gap-1 transition-transform group-hover:translate-x-1 ${isActive ? "text-[#00ffa3]" : "text-[#8aa898] hover:text-white"}`}
-                        >
-                          Read Blueprint <ArrowRight className="w-3 h-3" />
-                        </button>
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
-
-              {/* Right Column (col-span-7): Quantum Backtest Console */}
-              <div className="lg:col-span-7 bg-[#050a0e]/95 border border-white/5 rounded-2xl p-6 relative overflow-hidden flex flex-col justify-between min-h-[500px]">
-                {/* Ambient inner glow */}
-                <div className="absolute top-0 right-0 w-48 h-48 bg-[#00ffa3]/[0.02] blur-3xl pointer-events-none" />
-                
-                {/* Header info */}
-                <div className="flex items-start justify-between border-b border-white/5 pb-4 mb-4">
-                  <div>
-                    <div className="flex items-center gap-2">
-                      <span className="w-2 h-2 rounded-full bg-[#00ffa3] animate-ping" />
-                      <span className="text-[10px] font-bold tracking-widest font-data-mono uppercase text-[#00ffa3]">
-                        Quantum Backtester v1.0.4
-                      </span>
-                    </div>
-                    <h4 className="text-lg font-extrabold text-white mt-1">
-                      {activeAcademyCourse.title.replace("Understanding ", "").replace("Trading with ", "")}
-                    </h4>
-                  </div>
-                  <div className="px-3 py-1 rounded bg-[#00ffa3]/5 border border-[#00ffa3]/15 text-[10px] text-[#00ffa3] font-bold font-data-mono">
-                    {activeAcademyCourse.id.toUpperCase()}
-                  </div>
-                </div>
-
-                {/* Strategy Sliders Panel */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
-                  {activeAcademyCourse.id === "order-book" && (
-                    <>
-                      <div className="bg-white/[0.02] border border-white/5 p-3.5 rounded-xl text-left">
-                        <div className="flex justify-between items-center mb-2">
-                          <label className="text-[10px] text-[#8aa898] font-bold uppercase tracking-wider">Imbalance Threshold</label>
-                          <span className="text-[10px] font-data-mono font-bold text-[#00ffa3]">{sliderValue1}</span>
-                        </div>
-                        <input 
-                          type="range" 
-                          min="0.10" 
-                          max="0.90" 
-                          step="0.05"
-                          value={sliderValue1}
-                          onChange={(e) => setSliderValue1(parseFloat(e.target.value))}
-                          disabled={backtestRunning}
-                          className="w-full h-1 bg-white/10 rounded-lg appearance-none cursor-pointer accent-[#00ffa3]"
-                        />
-                        <div className="flex justify-between text-[8px] text-[#5a7a6a] mt-1 font-data-mono">
-                          <span>0.10 (LOW BIAS)</span>
-                          <span>0.90 (HIGH BIAS)</span>
-                        </div>
-                      </div>
-
-                      <div className="bg-white/[0.02] border border-white/5 p-3.5 rounded-xl text-left">
-                        <div className="flex justify-between items-center mb-2">
-                          <label className="text-[10px] text-[#8aa898] font-bold uppercase tracking-wider">L2 Depth Weight</label>
-                          <span className="text-[10px] font-data-mono font-bold text-[#00ffa3]">{Math.round(sliderValue2 * 100)}%</span>
-                        </div>
-                        <input 
-                          type="range" 
-                          min="0.10" 
-                          max="1.00" 
-                          step="0.05"
-                          value={sliderValue2}
-                          onChange={(e) => setSliderValue2(parseFloat(e.target.value))}
-                          disabled={backtestRunning}
-                          className="w-full h-1 bg-white/10 rounded-lg appearance-none cursor-pointer accent-[#00ffa3]"
-                        />
-                        <div className="flex justify-between text-[8px] text-[#5a7a6a] mt-1 font-data-mono">
-                          <span>10% (SENSITIVE)</span>
-                          <span>100% (STABLE)</span>
-                        </div>
-                      </div>
-                    </>
-                  )}
-
-                  {activeAcademyCourse.id === "ai-signals" && (
-                    <>
-                      <div className="bg-white/[0.02] border border-white/5 p-3.5 rounded-xl text-left">
-                        <div className="flex justify-between items-center mb-2">
-                          <label className="text-[10px] text-[#8aa898] font-bold uppercase tracking-wider">Sentiment Sensitivity</label>
-                          <span className="text-[10px] font-data-mono font-bold text-[#00ffa3]">{sliderValue1}</span>
-                        </div>
-                        <input 
-                          type="range" 
-                          min="0.20" 
-                          max="0.80" 
-                          step="0.05"
-                          value={sliderValue1}
-                          onChange={(e) => setSliderValue1(parseFloat(e.target.value))}
-                          disabled={backtestRunning}
-                          className="w-full h-1 bg-white/10 rounded-lg appearance-none cursor-pointer accent-[#00ffa3]"
-                        />
-                        <div className="flex justify-between text-[8px] text-[#5a7a6a] mt-1 font-data-mono">
-                          <span>0.20 (SLOW HYPE)</span>
-                          <span>0.80 (HYPER FOCUS)</span>
-                        </div>
-                      </div>
-
-                      <div className="bg-white/[0.02] border border-white/5 p-3.5 rounded-xl text-left">
-                        <div className="flex justify-between items-center mb-2">
-                          <label className="text-[10px] text-[#8aa898] font-bold uppercase tracking-wider">NLP Sentiment Weight</label>
-                          <span className="text-[10px] font-data-mono font-bold text-[#00ffa3]">{Math.round(sliderValue2 * 100)}%</span>
-                        </div>
-                        <input 
-                          type="range" 
-                          min="0.10" 
-                          max="1.00" 
-                          step="0.05"
-                          value={sliderValue2}
-                          onChange={(e) => setSliderValue2(parseFloat(e.target.value))}
-                          disabled={backtestRunning}
-                          className="w-full h-1 bg-white/10 rounded-lg appearance-none cursor-pointer accent-[#00ffa3]"
-                        />
-                        <div className="flex justify-between text-[8px] text-[#5a7a6a] mt-1 font-data-mono">
-                          <span>10% (LOW INFLUENCE)</span>
-                          <span>100% (MAX SYSTEMATIC)</span>
-                        </div>
-                      </div>
-                    </>
-                  )}
-
-                  {activeAcademyCourse.id !== "order-book" && activeAcademyCourse.id !== "ai-signals" && (
-                    <>
-                      <div className="bg-white/[0.02] border border-white/5 p-3.5 rounded-xl text-left">
-                        <div className="flex justify-between items-center mb-2">
-                          <label className="text-[10px] text-[#8aa898] font-bold uppercase tracking-wider">ATR Multiplier Offset</label>
-                          <span className="text-[10px] font-data-mono font-bold text-[#00ffa3]">{sliderValue1}x</span>
-                        </div>
-                        <input 
-                          type="range" 
-                          min="1.0" 
-                          max="4.0" 
-                          step="0.1"
-                          value={sliderValue1}
-                          onChange={(e) => setSliderValue1(parseFloat(e.target.value))}
-                          disabled={backtestRunning}
-                          className="w-full h-1 bg-white/10 rounded-lg appearance-none cursor-pointer accent-[#00ffa3]"
-                        />
-                        <div className="flex justify-between text-[8px] text-[#5a7a6a] mt-1 font-data-mono">
-                          <span>1.0x (TIGHT)</span>
-                          <span>4.0x (WIDE BAND)</span>
-                        </div>
-                      </div>
-
-                      <div className="bg-white/[0.02] border border-white/5 p-3.5 rounded-xl text-left">
-                        <div className="flex justify-between items-center mb-2">
-                          <label className="text-[10px] text-[#8aa898] font-bold uppercase tracking-wider">Kelly Sizing Fraction</label>
-                          <span className="text-[10px] font-data-mono font-bold text-[#00ffa3]">{Math.round(sliderValue2 * 100)}%</span>
-                        </div>
-                        <input 
-                          type="range" 
-                          min="0.05" 
-                          max="0.50" 
-                          step="0.05"
-                          value={sliderValue2}
-                          onChange={(e) => setSliderValue2(parseFloat(e.target.value))}
-                          disabled={backtestRunning}
-                          className="w-full h-1 bg-white/10 rounded-lg appearance-none cursor-pointer accent-[#00ffa3]"
-                        />
-                        <div className="flex justify-between text-[8px] text-[#5a7a6a] mt-1 font-data-mono">
-                          <span>5% (SAFE COMPOUND)</span>
-                          <span>50% (MAX EXPOSURE)</span>
-                        </div>
-                      </div>
-                    </>
-                  )}
-                </div>
-
-                {/* Sparkline Canvas / SVG drawing */}
-                <div className="bg-black/40 border border-white/5 rounded-xl p-4 mb-4 relative min-h-[160px] flex flex-col justify-between">
-                  <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff03_1px,transparent_1px),linear-gradient(to_bottom,#ffffff03_1px,transparent_1px)] bg-[size:16px_16px] pointer-events-none" />
-                  
-                  <div className="flex items-center justify-between relative z-10">
-                    <span className="text-[8px] font-data-mono text-[#5a7a6a] uppercase">Simulated Equity Curve</span>
-                    <span className={`text-[10px] font-data-mono font-bold px-1.5 py-0.5 rounded ${backtestRunning ? "bg-amber-500/10 text-amber-500" : "bg-[#00ffa3]/10 text-[#00ffa3]"}`}>
-                      {backtestRunning ? "TESTING..." : "TELEMETRY STABLE"}
-                    </span>
-                  </div>
-
-                  <div className="w-full h-24 relative mt-2">
-                    {backtestChartData && backtestChartData.length > 0 && (
-                      <svg className="w-full h-full overflow-visible" preserveAspectRatio="none">
-                        <defs>
-                          <linearGradient id="chartGlow" x1="0" y1="0" x2="0" y2="1">
-                            <stop offset="0%" stopColor="#00ffa3" stopOpacity="0.25" />
-                            <stop offset="100%" stopColor="#00ffa3" stopOpacity="0.00" />
-                          </linearGradient>
-                        </defs>
-                        {(() => {
-                          const minVal = Math.min(...backtestChartData);
-                          const maxVal = Math.max(...backtestChartData);
-                          const range = maxVal - minVal || 1;
-                          
-                          const svgPoints = backtestChartData.map((val, idx) => {
-                            const x = (idx / (backtestChartData.length - 1)) * 100;
-                            const y = 90 - ((val - minVal) / range) * 80;
-                            return `${x},${y}`;
-                          });
-
-                          const pathD = `M ${svgPoints.join(" L ")}`;
-                          const areaD = `${pathD} L 100,100 L 0,100 Z`;
-
-                          return (
-                            <svg viewBox="0 0 100 100" className="w-full h-full overflow-visible" preserveAspectRatio="none">
-                              <path d={areaD} fill="url(#chartGlow)" />
-                              <path d={pathD} fill="none" stroke="#00ffa3" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                              {svgPoints.length > 0 && (
-                                <circle
-                                  cx={svgPoints[svgPoints.length - 1].split(",")[0]}
-                                  cy={svgPoints[svgPoints.length - 1].split(",")[1]}
-                                  r="1.8"
-                                  fill="#00ffa3"
-                                  className="animate-pulse"
-                                />
-                              )}
-                            </svg>
-                          );
-                        })()}
-                      </svg>
-                    )}
-                  </div>
-                </div>
-
-                {/* Scrolling Logs panel */}
-                <div className="bg-black/60 border border-white/5 rounded-xl p-3 mb-6 h-28 overflow-y-auto text-left relative">
-                  <div className="absolute top-0 right-3 text-[8px] font-data-mono text-[#5a7a6a] uppercase py-1">Strategy Output Logs</div>
-                  <div className="space-y-1 font-data-mono text-[9px] text-[#8aa898] leading-tight">
-                    {backtestLogs.map((log, idx) => {
-                      let color = "text-[#8aa898]";
-                      if (log.startsWith("[INIT]")) color = "text-cyan-400";
-                      if (log.startsWith("[LOAD]")) color = "text-purple-400";
-                      if (log.startsWith("[COMPLETE]")) color = "text-[#00ffa3] font-bold";
-                      if (log.startsWith("[CALIB]")) color = "text-amber-400";
-                      return (
-                        <div key={idx} className={`${color} flex items-start gap-1`}>
-                          <span className="text-[#5a7a6a] shrink-0">&gt;</span>
-                          <span>{log}</span>
-                        </div>
-                      );
-                    })}
-                  </div>
-                </div>
-
-                {/* Diagnostics Stats + Run Trigger */}
-                <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-4">
-                  <div className="bg-white/[0.02] border border-white/5 px-3 py-2 rounded-xl text-left">
-                    <span className="text-[8px] text-[#5a7a6a] font-bold uppercase tracking-wider block">Simulated Trades</span>
-                    <span className="text-sm font-extrabold text-white font-data-mono">{backtestMetrics.trades || "—"}</span>
-                  </div>
-                  <div className="bg-white/[0.02] border border-white/5 px-3 py-2 rounded-xl text-left">
-                    <span className="text-[8px] text-[#5a7a6a] font-bold uppercase tracking-wider block">Yield Ratio</span>
-                    <span className={`text-sm font-extrabold font-data-mono ${backtestMetrics.yield >= 0 ? "text-[#00ffa3]" : "text-rose-500"}`}>
-                      {backtestMetrics.yield ? `+${backtestMetrics.yield}%` : "—"}
-                    </span>
-                  </div>
-                  <div className="bg-white/[0.02] border border-white/5 px-3 py-2 rounded-xl text-left">
-                    <span className="text-[8px] text-[#5a7a6a] font-bold uppercase tracking-wider block">Profit Factor</span>
-                    <span className="text-sm font-extrabold text-white font-data-mono">{backtestMetrics.profitFactor || "—"}</span>
-                  </div>
-                  <div className="bg-white/[0.02] border border-white/5 px-3 py-2 rounded-xl text-left">
-                    <span className="text-[8px] text-[#5a7a6a] font-bold uppercase tracking-wider block">Win Probability</span>
-                    <span className="text-sm font-extrabold text-white font-data-mono">{backtestMetrics.winRate ? `${backtestMetrics.winRate}%` : "—"}</span>
-                  </div>
-                </div>
-
-                {/* Run Button with Animated Sweep */}
-                <div className="relative">
-                  {backtestRunning && (
-                    <div 
-                      className="absolute inset-0 bg-[#00ffa3]/10 transition-all duration-300 rounded-xl"
-                      style={{ width: `${backtestProgress}%` }}
-                    />
-                  )}
-                  <button
-                    onClick={handleRunBacktest}
-                    disabled={backtestRunning}
-                    className={`w-full py-4 rounded-xl font-extrabold text-xs uppercase tracking-widest relative z-10 transition-all duration-300 border ${
-                      backtestRunning
-                        ? "border-amber-500/25 text-amber-500 cursor-not-allowed bg-amber-500/5"
-                        : "border-[#00ffa3]/30 bg-[#00ffa3]/10 text-[#00ffa3] hover:bg-[#00ffa3]/20 hover:shadow-[0_0_20px_rgba(0,255,163,0.15)] active:scale-[0.98]"
-                    }`}
-                  >
-                    {backtestRunning ? `Simulating Monte Carlo Ledger (${backtestProgress}%)` : "Execute Blueprint Backtest"}
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* ====================================================
-          TradePulse Academy Article Reader Modal
-          ==================================================== */}
-      {selectedLearnArticle && (
-        <div className="fixed inset-0 z-[60] bg-[#04090c]/98 backdrop-blur-xl flex flex-col items-center justify-start overflow-y-auto animate-fade-in transition-all duration-300 text-left">
-          {/* Header Bar */}
-          <div className="w-full max-w-5xl px-6 py-6 border-b border-white/5 flex items-center justify-between sticky top-0 bg-[#04090c]/95 backdrop-blur-md z-20">
-            <div className="flex items-center gap-3">
-              <span className="px-2 py-0.5 bg-[#00ffa3]/15 text-[#00ffa3] rounded border border-[#00ffa3]/20 text-[9px] font-bold uppercase font-data-mono">
-                {selectedLearnArticle.tag}
-              </span>
-              <span className="text-[10px] text-[#5a7a6a] font-bold font-data-mono uppercase tracking-wider">
-                {selectedLearnArticle.duration}
-              </span>
-            </div>
-            <button 
-              onClick={() => setSelectedLearnArticle(null)}
-              className="w-9 h-9 rounded-full bg-white/5 hover:bg-white/10 flex items-center justify-center text-white transition-colors"
-            >
-              ✕
-            </button>
-          </div>
-
-          {/* Article Container */}
-          <div className="w-full max-w-3xl px-6 py-12 text-left relative z-10 animate-in fade-in zoom-in-95 duration-300">
-            <h1 className="text-3xl sm:text-5xl font-extrabold text-white tracking-tight leading-tight mb-8">
-              {selectedLearnArticle.title}
-            </h1>
-            
-            <div className="prose prose-invert max-w-none text-[#8aa898] space-y-6 text-sm sm:text-base leading-relaxed">
-              {selectedLearnArticle.content.map((paragraph, pIdx) => {
-                if (paragraph.startsWith("###")) {
-                  return (
-                    <h3 key={pIdx} className="text-xl font-bold text-white tracking-tight pt-4 pb-2 border-b border-white/5">
-                      {paragraph.replace("###", "").trim()}
-                    </h3>
-                  );
-                } else if (paragraph.startsWith("```")) {
-                  return (
-                    <pre key={pIdx} className="bg-black/40 border border-white/5 p-4 rounded-xl font-data-mono text-xs text-[#00ffa3] overflow-x-auto my-4 leading-relaxed">
-                      {paragraph.replace(/```/g, "").trim()}
-                    </pre>
-                  );
-                } else {
-                  return <p key={pIdx}>{paragraph}</p>;
-                }
-              })}
-            </div>
-
-            {/* Completion Indicator */}
-            <div className="mt-16 p-6 rounded-2xl bg-[#00ffa3]/5 border border-[#00ffa3]/15 flex flex-col sm:flex-row items-center justify-between gap-6">
-              <div className="text-center sm:text-left">
-                <h4 className="text-white font-extrabold text-base">Module Completed</h4>
-                <p className="text-xs text-[#8aa898] mt-1">You've successfully analyzed the core components of this trading system blueprint.</p>
-              </div>
-              <button 
-                onClick={() => setSelectedLearnArticle(null)}
-                className="px-6 py-2.5 rounded-full bg-[#00ffa3] text-[#050a0e] font-extrabold text-xs tracking-wider uppercase hover:shadow-[0_0_15px_#00ffa3] hover:scale-105 active:scale-95 transition-all duration-300"
-              >
-                Mark as Complete
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   );
 };

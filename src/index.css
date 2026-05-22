@@ -101,8 +101,22 @@
 @layer base {
   * {
     @apply border-border;
+  }
+
+  /* Scope theme transitions to interactive/themed elements only — NOT the wildcard.
+     Applying transitions to * kills scroll performance because the browser
+     recalculates transition state on every element during scroll repaints. */
+  a, button, input, select, textarea,
+  [class*="bg-"], [class*="border-"], [class*="text-"],
+  .transition-all, .transition-colors {
     transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease, fill 0.3s ease, stroke 0.3s ease;
   }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+  }
+
   body {
     @apply bg-background text-foreground overflow-x-hidden font-sans;
     background-color: hsl(var(--surface));
@@ -113,6 +127,8 @@
 /* Styles for the scrollable container */
 .scroll-container {
   overflow-y: auto;
+  will-change: scroll-position;
+  -webkit-overflow-scrolling: touch;
 }
 
 /* Custom scrollbar styles for Webkit browsers (Chrome, Safari) */
