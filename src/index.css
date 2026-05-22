@@ -1,0 +1,242 @@
+@import url('https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@500&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+ 
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 224 71.4% 4.1%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 224 71.4% 4.1%;
+ 
+    --popover: 0 0% 100%;
+    --popover-foreground: 224 71.4% 4.1%;
+ 
+    --primary: 220.9 39.3% 11%;
+    --primary-foreground: 210 20% 98%;
+ 
+    --secondary: 220 14.3% 95.9%;
+    --secondary-foreground: 220.9 39.3% 11%;
+ 
+    --muted: 220 14.3% 95.9%;
+    --muted-foreground: 220 8.9% 46.1%;
+ 
+    --accent: 220 14.3% 95.9%;
+    --accent-foreground: 220.9 39.3% 11%;
+ 
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 20% 98%;
+
+    --border: 210 14% 89%;
+    --input: 210 14% 89%;
+    --ring: 224 71.4% 4.1%;
+ 
+    --radius: 0.5rem;
+
+    /* Light Theme Custom Tokens */
+    --surface: 0 0% 100%;
+    --surface-container-lowest: 210 17% 98%;
+    --surface-container-low: 210 16% 96%;
+    --surface-container: 210 16% 93%;
+    --surface-container-high: 210 14% 89%;
+    --surface-container-highest: 210 14% 83%;
+    --surface-bright: 210 16% 93%;
+    --on-surface: 210 10% 11%;
+    --on-surface-variant: 210 9% 31%;
+    --outline: 210 9% 71%;
+    --outline-variant: 210 14% 89%;
+    --inverse-surface: 210 15% 8%;
+    --inverse-on-surface: 210 17% 98%;
+  }
+ 
+  .dark {
+    --background: 224 71.4% 4.1%;
+    --foreground: 210 20% 98%;
+ 
+    --card: 224 71.4% 4.1%;
+    --card-foreground: 210 20% 98%;
+ 
+    --popover: 224 71.4% 4.1%;
+    --popover-foreground: 210 20% 98%;
+ 
+    --primary: 210 20% 98%;
+    --primary-foreground: 220.9 39.3% 11%;
+ 
+    --secondary: 215 27.9% 16.9%;
+    --secondary-foreground: 210 20% 98%;
+ 
+    --muted: 215 27.9% 16.9%;
+    --muted-foreground: 217.9 10.6% 64.9%;
+ 
+    --accent: 215 27.9% 16.9%;
+    --accent-foreground: 210 20% 98%;
+ 
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 20% 98%;
+ 
+    --border: 215 27.9% 16.9%;
+    --input: 215 27.9% 16.9%;
+    --ring: 216 12.2% 83.9%;
+
+    /* Dark Theme Custom Tokens */
+    --surface: 210 15% 8%;
+    --surface-container-lowest: 210 22% 5%;
+    --surface-container-low: 210 12% 11%;
+    --surface-container: 210 10% 13%;
+    --surface-container-high: 215 8% 17%;
+    --surface-container-highest: 210 6% 21%;
+    --surface-bright: 220 5% 23%;
+    --on-surface: 230 11% 89%;
+    --on-surface-variant: 136 14% 76%;
+    --outline: 138 9% 55%;
+    --outline-variant: 139 12% 26%;
+    --inverse-surface: 0 0% 100%;
+    --inverse-on-surface: 210 10% 11%;
+  }
+}
+ 
+@layer base {
+  * {
+    @apply border-border;
+    transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease, fill 0.3s ease, stroke 0.3s ease;
+  }
+  body {
+    @apply bg-background text-foreground overflow-x-hidden font-sans;
+    background-color: hsl(var(--surface));
+    color: hsl(var(--on-surface));
+  }
+}
+
+/* Styles for the scrollable container */
+.scroll-container {
+  overflow-y: auto;
+}
+
+/* Custom scrollbar styles for Webkit browsers (Chrome, Safari) */
+.scroll-container::-webkit-scrollbar,
+.custom-scrollbar::-webkit-scrollbar {
+  width: 4px;
+  background: transparent;
+}
+
+.scroll-container::-webkit-scrollbar-track,
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.scroll-container::-webkit-scrollbar-thumb,
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #323538;
+  border-radius: 10px;
+}
+
+.scroll-container::-webkit-scrollbar-thumb:hover,
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+.scroll-container {
+  -ms-overflow-style: -ms-autohiding-scrollbar;
+}
+
+/* Premium Stitch Styling Utilities */
+.font-body-md {
+  font-family: 'Hanken Grotesk', sans-serif;
+}
+.font-headline-md {
+  font-family: 'Hanken Grotesk', sans-serif;
+  font-weight: 600;
+}
+.font-display-lg {
+  font-family: 'Hanken Grotesk', sans-serif;
+  font-weight: 700;
+}
+.font-title-sm {
+  font-family: 'Hanken Grotesk', sans-serif;
+  font-weight: 600;
+}
+.font-label-xs {
+  font-family: 'Hanken Grotesk', sans-serif;
+  font-weight: 500;
+}
+.font-data-mono {
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.chart-glow {
+  filter: drop-shadow(0 0 12px rgba(0, 226, 144, 0.6));
+}
+
+.price-up {
+  color: #00e290 !important;
+}
+
+.price-down {
+  color: #ffb4ab !important;
+}
+
+/* Ambient Background Glow */
+.ambient-glow {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at 50% 50%, rgba(0, 226, 144, 0.05) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* Mouse Tracking Interaction */
+.mouse-glow-container {
+  --mouse-x: 50%;
+  --mouse-y: 50%;
+}
+
+.mouse-glow-element {
+  background: radial-gradient(400px circle at var(--mouse-x) var(--mouse-y), rgba(0, 226, 144, 0.08), transparent 80%);
+}
+
+/* Scanline Shimmer Effect for Chart */
+.chart-shimmer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(0, 226, 144, 0.05), transparent);
+  pointer-events: none;
+}
+
+/* Container Queries for AssetTable responsive panel resize */
+.asset-table-container {
+  container-type: inline-size;
+}
+
+.show-symbol-inside-coin {
+  display: none;
+}
+
+@container (max-width: 680px) {
+  .column-volume {
+    display: none !important;
+  }
+}
+
+@container (max-width: 520px) {
+  .column-market-cap {
+    display: none !important;
+  }
+}
+
+@container (max-width: 420px) {
+  .column-symbol {
+    display: none !important;
+  }
+  .show-symbol-inside-coin {
+    display: block !important;
+  }
+}
