@@ -114,6 +114,26 @@ const Navbar = () => {
         >
           Portfolio
         </button>
+        <button
+          onClick={() => navigate("/activity")}
+          className={`font-body-md text-sm font-medium transition-all duration-200 bg-transparent border-0 cursor-pointer ${
+            location.pathname === "/activity"
+              ? "text-primary border-b-2 border-white pb-1 font-bold"
+              : "text-on-surface-variant hover:text-primary"
+          }`}
+        >
+          History
+        </button>
+        <button
+          onClick={() => navigate("/watchlist")}
+          className={`font-body-md text-sm font-medium transition-all duration-200 bg-transparent border-0 cursor-pointer ${
+            location.pathname === "/watchlist"
+              ? "text-primary border-b-2 border-white pb-1 font-bold"
+              : "text-on-surface-variant hover:text-primary"
+          }`}
+        >
+          Watchlist
+        </button>
       </nav>
 
       {/* Right side: Actions / Utilities + Profile */}

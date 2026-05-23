@@ -29,7 +29,9 @@ import {
   Newspaper, 
   ExternalLink, 
   ArrowUpRight, 
-  ShieldCheck
+  ShieldCheck,
+  Bookmark,
+  Share2
 } from "lucide-react";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { sendMessage } from "@/Redux/Chat/Action";
@@ -666,8 +668,14 @@ const Home = () => {
 
       {/* Fold 5: High-Fidelity News Details Read Overlay Modal */}
       {isNewsModalOpen && selectedNews && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/70 backdrop-blur-md animate-fade-in">
-          <div className="relative w-full max-w-3xl max-h-[85vh] flex flex-col bg-surface-container-low border border-outline-variant/40 rounded-2xl shadow-2xl overflow-hidden animate-scale-up select-text">
+        <div 
+          onClick={() => setIsNewsModalOpen(false)}
+          className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/70 backdrop-blur-md animate-fade-in"
+        >
+          <div 
+            onClick={(e) => e.stopPropagation()}
+            className="relative w-full max-w-3xl max-h-[85vh] flex flex-col bg-surface-container-low border border-outline-variant/40 rounded-2xl shadow-2xl overflow-hidden animate-scale-up select-text"
+          >
             {/* Modal Header */}
             <div className="flex items-start justify-between p-6 border-b border-outline-variant/20 bg-surface-container-high/40">
               <div className="pr-4">

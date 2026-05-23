@@ -8,8 +8,6 @@ const menu = [
   { name: "Markets", path: "/search", icon: "bar_chart" },
   { name: "Trade", path: "/market/bitcoin", icon: "swap_horiz" },
   { name: "Portfolio", path: "/portfolio", icon: "account_balance" },
-  { name: "History", path: "/activity", icon: "history" },
-  { name: "Watchlist", path: "/watchlist", icon: "bookmark" },
   { name: "Profile", path: "/profile", icon: "person" },
   { name: "Logout", path: "/", icon: "logout" },
 ];
@@ -43,20 +41,17 @@ const SideBar = ({ isSheet, isCollapsed = false, onToggleCollapse }) => {
     <div className={`flex flex-col h-full overflow-hidden bg-surface-container-low border-r border-outline-variant transition-all duration-300 ${
       isCollapsed ? "p-2 gap-4" : "p-4 gap-2"
     }`}>
-      {/* Live Connection Header Section */}
-      <div className={`px-4 py-4 mb-4 flex items-center shrink-0 ${isCollapsed ? "justify-center" : "gap-3"}`}>
+      {/* Header Section */}
+      <div className={`px-4 py-4 mb-4 flex items-center shrink-0 ${isCollapsed ? "justify-center" : "gap-3 border-b border-outline-variant/25 pb-4"}`}>
         {!isCollapsed ? (
           <div className="text-left">
             <h2 className="text-sm font-bold text-primary font-title-sm flex items-center gap-2">
               <span className="material-symbols-outlined text-white text-lg">bolt</span>
               Terminal v1.0
             </h2>
-            <p className="text-xs text-on-surface-variant flex items-center gap-1.5 font-label-xs mt-1">
-              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span> Live Connection
-            </p>
           </div>
         ) : (
-          <div className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse" title="Live Connection"></div>
+          <span className="material-symbols-outlined text-white text-lg" title="Terminal v1.0">bolt</span>
         )}
       </div>
 
