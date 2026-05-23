@@ -48,15 +48,15 @@ const SideBar = ({ isSheet, isCollapsed = false, onToggleCollapse }) => {
         {!isCollapsed ? (
           <div className="text-left">
             <h2 className="text-sm font-bold text-primary font-title-sm flex items-center gap-2">
-              <span className="material-symbols-outlined text-emerald-400 text-lg">bolt</span>
+              <span className="material-symbols-outlined text-white text-lg">bolt</span>
               Terminal v1.0
             </h2>
             <p className="text-xs text-on-surface-variant flex items-center gap-1.5 font-label-xs mt-1">
-              <span className="w-2 h-2 rounded-full bg-[#00e290] animate-pulse"></span> Live Connection
+              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span> Live Connection
             </p>
           </div>
         ) : (
-          <div className="w-2.5 h-2.5 rounded-full bg-[#00e290] animate-pulse" title="Live Connection"></div>
+          <div className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse" title="Live Connection"></div>
         )}
       </div>
 
@@ -72,18 +72,18 @@ const SideBar = ({ isSheet, isCollapsed = false, onToggleCollapse }) => {
                   title={isCollapsed ? item.name : undefined}
                   className={`w-full flex items-center transition-all duration-200 group relative ${
                     isCollapsed ? "justify-center px-0 py-3" : "gap-4 px-4 py-3"
-                  } rounded-xl ${
+                  } rounded-xl border ${
                     isActive
-                      ? "text-[#00e290] font-bold bg-[#00e290]/10 shadow-sm border border-[#00e290]/15"
-                      : "text-on-surface-variant hover:text-white hover:bg-[#272a2e]"
+                      ? "text-white font-bold bg-white/10 shadow-sm border-white/15"
+                      : "text-on-surface-variant hover:text-white hover:bg-white/5 border-transparent"
                   }`}
                 >
                   {/* Left Active border bar */}
                   {isActive && (
-                    <span className="absolute left-0 top-[20%] bottom-[20%] w-[3.5px] bg-[#00e290] rounded-r-md" />
+                    <span className="absolute left-0 top-[20%] bottom-[20%] w-[3.5px] bg-white rounded-r-md" />
                   )}
                   <span className={`material-symbols-outlined text-xl transition-colors duration-200 ${
-                    isActive ? "text-[#00e290]" : "text-on-surface-variant group-hover:text-white"
+                    isActive ? "text-white" : "text-on-surface-variant group-hover:text-white"
                   }`}>
                     {item.icon}
                   </span>
@@ -101,7 +101,7 @@ const SideBar = ({ isSheet, isCollapsed = false, onToggleCollapse }) => {
           <button
             onClick={() => navigate("/wallet")}
             title={isCollapsed ? "Deposit Funds" : undefined}
-            className={`bg-[#00e290] text-[#003920] font-bold hover:opacity-90 transition-all font-body-md hover:scale-[1.02] shadow-md flex items-center justify-center ${
+            className={`bg-white hover:bg-gray-200 text-black font-bold transition-all font-body-md hover:scale-[1.02] shadow-md flex items-center justify-center border-0 cursor-pointer ${
               isCollapsed ? "w-12 h-12 rounded-xl p-0" : "w-full py-3 rounded-xl gap-2"
             }`}
           >
@@ -114,7 +114,7 @@ const SideBar = ({ isSheet, isCollapsed = false, onToggleCollapse }) => {
           <button
             onClick={() => navigate("/support")}
             title={isCollapsed ? "Support" : undefined}
-            className={`flex items-center text-on-surface-variant hover:text-white hover:bg-[#272a2e] rounded-xl transition-all ${
+            className={`flex items-center text-on-surface-variant hover:text-white hover:bg-white/5 rounded-xl transition-all border-0 cursor-pointer ${
               isCollapsed ? "w-12 h-12 justify-center p-0" : "w-full gap-3 px-4 py-2.5"
             }`}
           >
@@ -128,7 +128,7 @@ const SideBar = ({ isSheet, isCollapsed = false, onToggleCollapse }) => {
           <button
             onClick={onToggleCollapse}
             title={isCollapsed ? "Expand Menu" : "Minimize Menu"}
-            className={`flex items-center text-on-surface-variant hover:text-white hover:bg-[#272a2e] rounded-xl transition-all ${
+            className={`flex items-center text-on-surface-variant hover:text-white hover:bg-white/5 rounded-xl transition-all border-0 cursor-pointer ${
               isCollapsed ? "w-12 h-12 justify-center p-0" : "w-full gap-3 px-4 py-2.5"
             }`}
           >

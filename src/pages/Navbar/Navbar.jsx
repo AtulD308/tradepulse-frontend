@@ -30,7 +30,7 @@ const Navbar = () => {
         <Sheet>
           <SheetTrigger asChild>
             <Button
-              className="rounded-full h-10 w-10 md:hidden flex items-center justify-center p-0 hover:bg-[#272a2e]"
+              className="rounded-full h-10 w-10 md:hidden flex items-center justify-center p-0 hover:bg-white/5 border-0"
               variant="ghost"
               size="icon"
             >
@@ -46,7 +46,7 @@ const Navbar = () => {
                 <div className="flex items-center justify-center gap-3">
                   <div className="text-xl font-extrabold tracking-wide text-primary">
                     <span>TRADE</span>
-                    <span className="text-[#00e290]">-</span>
+                    <span className="text-white">-</span>
                     <span>PULSE</span>
                   </div>
                 </div>
@@ -75,7 +75,7 @@ const Navbar = () => {
           </span>
           <input
             readOnly
-            className="bg-surface-container-low border border-outline-variant rounded-lg pl-10 pr-4 py-1.5 text-body-md focus:outline-none focus:ring-1 focus:ring-[#00e290] w-60 xl:w-64 cursor-pointer text-on-surface-variant group-hover:border-on-surface-variant transition-all font-body-md"
+            className="bg-surface-container-low border border-outline-variant rounded-lg pl-10 pr-4 py-1.5 text-body-md focus:outline-none focus:ring-1 focus:ring-white/20 focus:border-white/20 w-60 xl:w-64 cursor-pointer text-on-surface-variant group-hover:border-on-surface-variant transition-all font-body-md"
             placeholder="Search markets..."
             type="text"
           />
@@ -86,9 +86,9 @@ const Navbar = () => {
       <nav className="hidden md:flex items-center gap-8">
         <button
           onClick={() => navigate("/")}
-          className={`font-body-md text-sm font-medium transition-all duration-200 ${
+          className={`font-body-md text-sm font-medium transition-all duration-200 bg-transparent border-0 cursor-pointer ${
             location.pathname === "/"
-              ? "text-primary border-b-2 border-[#00e290] pb-1 font-bold"
+              ? "text-primary border-b-2 border-white pb-1 font-bold"
               : "text-on-surface-variant hover:text-primary"
           }`}
         >
@@ -96,9 +96,9 @@ const Navbar = () => {
         </button>
         <button
           onClick={() => navigate("/search")}
-          className={`font-body-md text-sm font-medium transition-all duration-200 ${
+          className={`font-body-md text-sm font-medium transition-all duration-200 bg-transparent border-0 cursor-pointer ${
             location.pathname === "/search"
-              ? "text-primary border-b-2 border-[#00e290] pb-1 font-bold"
+              ? "text-primary border-b-2 border-white pb-1 font-bold"
               : "text-on-surface-variant hover:text-primary"
           }`}
         >
@@ -106,9 +106,9 @@ const Navbar = () => {
         </button>
         <button
           onClick={() => navigate("/portfolio")}
-          className={`font-body-md text-sm font-medium transition-all duration-200 ${
+          className={`font-body-md text-sm font-medium transition-all duration-200 bg-transparent border-0 cursor-pointer ${
             location.pathname === "/portfolio"
-              ? "text-primary border-b-2 border-[#00e290] pb-1 font-bold"
+              ? "text-primary border-b-2 border-white pb-1 font-bold"
               : "text-on-surface-variant hover:text-primary"
           }`}
         >

@@ -62,7 +62,7 @@ const StockChart = ({ coinId }) => {
     if (accentColor === "cyan") return "#06b6d4";
     if (accentColor === "purple") return "#8b5cf6";
     if (accentColor === "orange") return "#f97316";
-    return "#10b981"; // Sage Green default
+    return "#ffffff"; // Premium monochromatic white default instead of glowing neon green
   };
 
   const options = {
@@ -135,7 +135,7 @@ const StockChart = ({ coinId }) => {
       },
     },
     grid: {
-      borderColor: "rgba(132, 149, 136, 0.15)", // Premium soft responsive outline
+      borderColor: "rgba(255, 255, 255, 0.05)", // Premium soft monochromatic outline
       strokeDashArray: 4,
       show: true,
     },

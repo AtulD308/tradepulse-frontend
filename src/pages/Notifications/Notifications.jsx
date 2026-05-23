@@ -152,24 +152,24 @@ const Notifications = () => {
   const unreadCount = notifications.filter((n) => !n.read).length;
 
   return (
-    <div className="flex flex-col items-center min-h-[90vh] bg-[#050a0e] text-white pt-6 px-4 md:px-8 pb-10">
+    <div className="flex flex-col items-center min-h-[90vh] bg-[#04090c] text-white pt-6 px-4 md:px-8 pb-10 relative">
       
       {/* Dynamic Background Glowing Circles */}
-      <div className="absolute top-20 left-10 w-[300px] h-[300px] rounded-full bg-radial-gradient(circle, rgba(16,185,129,0.02) 0%, transparent 70%) pointer-events-none -z-10" />
-      <div className="absolute bottom-10 right-10 w-[400px] h-[400px] rounded-full bg-radial-gradient(circle, rgba(16,185,129,0.03) 0%, transparent 70%) pointer-events-none -z-10" />
+      <div className="absolute top-20 left-10 w-[300px] h-[300px] rounded-full bg-radial-gradient(circle, rgba(255,255,255,0.01) 0%, transparent 70%) pointer-events-none -z-10" />
+      <div className="absolute bottom-10 right-10 w-[400px] h-[400px] rounded-full bg-radial-gradient(circle, rgba(255,255,255,0.02) 0%, transparent 70%) pointer-events-none -z-10" />
 
       <div className="w-full max-w-6xl grid grid-cols-1 lg:grid-cols-3 gap-6 mt-4">
         
         {/* LEFT & CENTER PANEL: Notification List (Grid span 2) */}
         <div className="lg:col-span-2 space-y-4">
-          <Card className="bg-[#0b1217]/60 backdrop-blur-md border border-[#272a2e]/60 rounded-xl shadow-2xl">
+          <Card className="bg-[#0b0c0e]/80 backdrop-blur-md border border-white/5 rounded-2xl shadow-2xl">
             <CardHeader className="pb-4 flex flex-row items-center justify-between space-y-0">
               <div className="flex items-center gap-3">
                 <CardTitle className="text-xl md:text-2xl font-bold text-white tracking-wide font-sans">
                   Notification Center
                 </CardTitle>
                 {unreadCount > 0 && (
-                  <span className="bg-emerald-500/10 text-emerald-400/90 border border-emerald-500/20 px-2.5 py-0.5 rounded-full font-body-md font-bold tracking-wider text-[11px]">
+                  <span className="bg-white/10 text-white border border-white/10 px-2.5 py-0.5 rounded-full font-body-md font-bold tracking-wider text-[11px]">
                     {unreadCount} new
                   </span>
                 )}
@@ -179,7 +179,7 @@ const Notifications = () => {
                   <>
                     <button
                       onClick={handleMarkAllAsRead}
-                      className="text-xs font-medium text-emerald-300 hover:text-emerald-200 hover:underline transition-all bg-transparent border-0 cursor-pointer"
+                      className="text-xs font-medium text-gray-400 hover:text-white hover:underline transition-all bg-transparent border-0 cursor-pointer"
                     >
                       Mark all read
                     </button>
@@ -197,15 +197,15 @@ const Notifications = () => {
 
             <CardContent>
               {/* Tab Filters with defined boundary capsule for humanized aesthetic */}
-              <div className="p-1.5 bg-[#0a0f12] border border-[#1e262c] rounded-xl flex gap-1 mb-6 overflow-x-auto custom-scrollbar">
+              <div className="p-1.5 bg-black/40 border border-white/5 rounded-xl flex gap-1 mb-6 overflow-x-auto custom-scrollbar">
                 {["ALL", "TRANSACTION", "TREND", "SYSTEM"].map((tab) => (
                   <button
                     key={tab}
                     onClick={() => setActiveTab(tab)}
-                    className={`px-4 py-2 rounded-lg text-xs font-semibold tracking-wide transition-all duration-300 border ${
+                    className={`px-4 py-2 rounded-lg text-xs font-semibold tracking-wide transition-all duration-300 border whitespace-nowrap cursor-pointer ${
                       activeTab === tab
-                        ? "bg-[#162028] text-white border-[#2c3b49] shadow-inner"
-                        : "bg-transparent text-gray-400 border-transparent hover:text-white hover:bg-[#12191f]/50"
+                        ? "bg-white text-black border-white shadow-inner font-semibold"
+                        : "bg-transparent text-gray-400 border-transparent hover:text-white hover:bg-white/5"
                     }`}
                   >
                     {tab === "ALL"
@@ -223,7 +223,7 @@ const Notifications = () => {
               <ScrollArea className="h-[550px] pr-2">
                 {filteredNotifications.length === 0 ? (
                   <div className="flex flex-col items-center justify-center py-20 text-center space-y-4">
-                    <div className="p-4 rounded-full bg-[#181d22]/60 border border-[#272a2e]/30 text-gray-500">
+                    <div className="p-4 rounded-full bg-white/5 border border-white/5 text-gray-500">
                       <Inbox className="w-10 h-10" />
                     </div>
                     <div>
@@ -233,7 +233,7 @@ const Notifications = () => {
                   </div>
                 ) : (
                   /* Unified container boundary enclosing all items with inner dividers */
-                  <div className="border border-[#1e262c] bg-[#070b0e]/30 rounded-xl overflow-hidden divide-y divide-[#182026]">
+                  <div className="border border-white/5 bg-black/20 rounded-xl overflow-hidden divide-y divide-white/5">
                     {filteredNotifications.map((n) => {
                       const isUnread = !n.read;
                       return (
@@ -242,15 +242,15 @@ const Notifications = () => {
                           onClick={() => handleCardClick(n.id)}
                           className={`relative flex items-start gap-4 p-4 transition-all duration-300 cursor-pointer ${
                             isUnread
-                              ? "bg-[#0e1a22]/50 hover:bg-[#12222d]/50 border-l-2 border-l-emerald-500/50"
-                              : "bg-transparent hover:bg-[#0d141a]/40 border-l-2 border-l-transparent"
+                              ? "bg-white/[0.03] hover:bg-white/[0.06] border-l-2 border-l-white"
+                              : "bg-transparent hover:bg-white/[0.02] border-l-2 border-l-transparent"
                           }`}
                         >
                           {/* Pulsing Unread Indicator dot */}
                           {isUnread && (
                             <span className="absolute top-4 right-4 flex h-1.5 w-1.5">
-                              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400/60 opacity-75"></span>
-                              <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-400"></span>
+                              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-white/60 opacity-75"></span>
+                              <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-white"></span>
                             </span>
                           )}
 
@@ -272,7 +272,7 @@ const Notifications = () => {
                           {/* Text Info */}
                           <div className="flex-1 space-y-1">
                             <div className="flex items-center justify-between pr-4">
-                              <h4 className={`text-sm font-semibold tracking-tight ${isUnread ? "text-emerald-300" : "text-white"}`}>
+                              <h4 className={`text-sm font-semibold tracking-tight ${isUnread ? "text-white font-semibold" : "text-gray-300"}`}>
                                 {n.title}
                               </h4>
                               <span className="text-[10px] text-gray-500 font-medium font-sans">
@@ -290,7 +290,7 @@ const Notifications = () => {
                                   e.stopPropagation();
                                   navigate(`/market/${n.coinId}`);
                                 }}
-                                className="mt-2 text-[11px] font-semibold text-emerald-300 hover:text-emerald-200 hover:underline flex items-center gap-1 bg-transparent border-0 cursor-pointer font-sans"
+                                className="mt-2 text-[11px] font-semibold text-white hover:underline flex items-center gap-1 bg-transparent border-0 cursor-pointer font-sans"
                               >
                                 View Market & Trade <ArrowRight className="w-3 h-3" />
                               </button>
@@ -303,7 +303,7 @@ const Notifications = () => {
                               e.stopPropagation();
                               handleDeleteNotification(n.id);
                             }}
-                            className="text-gray-500 hover:text-red-400 transition-colors p-1 rounded-md hover:bg-[#181d22]/50 border-0 bg-transparent cursor-pointer"
+                            className="text-gray-500 hover:text-red-400 transition-colors p-1 rounded-md hover:bg-white/5 border-0 bg-transparent cursor-pointer"
                             title="Delete notification"
                           >
                             <Trash2 className="w-4 h-4" />
@@ -320,9 +320,9 @@ const Notifications = () => {
 
         {/* RIGHT PANEL: Upward Trending Investment suggestions (Grid span 1) */}
         <div className="lg:col-span-1 space-y-4">
-          <Card className="bg-[#0b1217]/60 backdrop-blur-md border border-[#272a2e]/60 rounded-xl shadow-2xl sticky top-24">
-            <CardHeader className="pb-3 border-b border-[#272a2e]/60">
-              <div className="flex items-center gap-2 text-emerald-400">
+          <Card className="bg-[#0b0c0e]/80 backdrop-blur-md border border-white/5 rounded-2xl shadow-2xl sticky top-24">
+            <CardHeader className="pb-3 border-b border-white/5">
+              <div className="flex items-center gap-2 text-white">
                 <TrendingUp className="w-5 h-5" />
                 <CardTitle className="text-lg font-bold tracking-wide text-white font-sans">
                   Trending Investments
@@ -337,11 +337,11 @@ const Notifications = () => {
               {TRENDING_COINS.map((coin) => (
                 <div
                   key={coin.id}
-                  className="group flex flex-col p-3.5 rounded-xl bg-[#0a0f12]/60 border border-[#1c242b] hover:border-emerald-500/30 transition-all duration-300"
+                  className="group flex flex-col p-3.5 rounded-xl bg-black/30 border border-white/5 hover:border-white/15 transition-all duration-300"
                 >
                   <div className="flex items-center justify-between">
                     <div>
-                      <p className="text-sm font-semibold text-white group-hover:text-emerald-300 transition-colors">
+                      <p className="text-sm font-semibold text-white group-hover:text-white transition-colors">
                         {coin.name}
                       </p>
                       <p className="text-[10px] text-gray-500 font-medium">
@@ -361,7 +361,7 @@ const Notifications = () => {
 
                   <button
                     onClick={() => navigate(`/market/${coin.id}`)}
-                    className="mt-4 w-full py-2 rounded-lg bg-[#e1e2e7] hover:bg-white text-[#050a0e] font-bold text-xs transition-all duration-300 tracking-wider flex items-center justify-center gap-1.5 shadow-md active:scale-[0.98] border-0 cursor-pointer uppercase"
+                    className="mt-4 w-full py-2 rounded-lg bg-white hover:bg-gray-200 text-black font-bold text-xs transition-all duration-300 tracking-wider flex items-center justify-center gap-1.5 shadow-md active:scale-[0.98] border-0 cursor-pointer uppercase"
                   >
                     TRADE NOW
                     <ArrowRight className="w-3.5 h-3.5" />
@@ -370,7 +370,7 @@ const Notifications = () => {
               ))}
 
               {/* Warning Alert */}
-              <div className="p-3 rounded-lg bg-[#ffb4ab]/5 border border-[#ffb4ab]/15 text-xs text-[#ffb4ab]/80 leading-relaxed font-body-md">
+              <div className="p-3 rounded-xl bg-white/[0.02] border border-white/5 text-xs text-gray-400 leading-relaxed font-body-md">
                 <strong>Disclaimer:</strong> Trends represent past performance metrics and do not guarantee future gains. Please practice standard risk mitigation.
               </div>
             </CardContent>

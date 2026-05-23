@@ -84,7 +84,7 @@ const Auth = () => {
           height: "500px",
           borderRadius: "50%",
           background:
-            "radial-gradient(circle, rgba(0,229,160,0.05) 0%, transparent 70%)",
+            "radial-gradient(circle, rgba(255,255,255,0.015) 0%, transparent 70%)",
           zIndex: 0,
           pointerEvents: "none",
         }}

@@ -10,7 +10,6 @@ import {
   Bell, 
   Palette, 
   TrendingUp, 
-  BrainCircuit, 
   Wallet, 
   Database, 
   Info, 
@@ -170,13 +169,7 @@ const Settings = () => {
     preferredExchange: "TradePulse Pro"
   });
 
-  // State: AI Assistant
-  const [aiSettings, setAiSettings] = useState({
-    enablePulseAi: true,
-    responseStyle: "analytical", // concise, detailed, analytical, playful
-    suggestedPrompts: true,
-    sentimentAnalysis: true
-  });
+
 
   // State: Payments
   const [payments, setPayments] = useState({
@@ -216,8 +209,6 @@ const Settings = () => {
     { id: "SECURITY", label: "Security & Privacy", icon: Shield },
     { id: "NOTIFICATIONS", label: "Notification settings", icon: Bell },
     { id: "APPEARANCE", label: "Appearance Preferences", icon: Palette },
-    { id: "PORTFOLIO", label: "Portfolio Preferences", icon: TrendingUp },
-    { id: "AI", label: "AI Assistant", icon: BrainCircuit },
     { id: "PAYMENTS", label: "Payments & Wallets", icon: Wallet },
     { id: "PRIVACY", label: "Data & Data Privacy", icon: Database },
     { id: "ABOUT", label: "About & Info", icon: Info }
@@ -872,236 +863,7 @@ const Settings = () => {
                 </div>
               )}
 
-              {/* TAB 5: PORTFOLIO PREFERENCES */}
-              {activeTab === "PORTFOLIO" && (
-                <div className="p-6 space-y-6 flex-1 flex flex-col">
-                  <div>
-                    <h3 className="text-lg font-bold text-white tracking-wide">Portfolio Preferences</h3>
-                    <p className="text-gray-500 text-xs mt-1">Specify localized base pricing models, risk thresholds, and dashboard auto-feed updates.</p>
-                  </div>
 
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div className="flex items-center justify-between p-4 rounded-xl bg-[#080c0f] border border-[#1e262c]">
-                      <div>
-                        <p className="text-xs font-semibold text-white">Show Profit / Loss Percentage</p>
-                        <p className="text-[10px] text-gray-500 mt-0.5">Display 24h P&L % ratios alongside raw asset figures.</p>
-                      </div>
-                      <CustomSwitch
-                        checked={prefForm.showPlPercent}
-                        onChange={() => setPrefForm(prev => ({ ...prev, showPlPercent: !prev.showPlPercent }))}
-                      />
-                    </div>
-
-                    <div className="flex items-center justify-between p-4 rounded-xl bg-[#080c0f] border border-[#1e262c]">
-                      <div>
-                        <p className="text-xs font-semibold text-white">Show Total Portfolio Balance</p>
-                        <p className="text-[10px] text-gray-500 mt-0.5">Enable cumulative portfolio value headers.</p>
-                      </div>
-                      <CustomSwitch
-                        checked={prefForm.showTotalBalance}
-                        onChange={() => setPrefForm(prev => ({ ...prev, showTotalBalance: !prev.showTotalBalance }))}
-                      />
-                    </div>
-
-                    <div className="flex items-center justify-between p-4 rounded-xl bg-[#080c0f] border border-[#1e262c]">
-                      <div>
-                        <p className="text-xs font-semibold text-white">Auto-Refresh Market Prices</p>
-                        <p className="text-[10px] text-gray-500 mt-0.5">Feed real-time crypto prices every 15s in background.</p>
-                      </div>
-                      <CustomSwitch
-                        checked={prefForm.autoRefresh}
-                        onChange={() => setPrefForm(prev => ({ ...prev, autoRefresh: !prev.autoRefresh }))}
-                      />
-                    </div>
-
-                    <div className="p-4 rounded-xl bg-[#080c0f] border border-[#1e262c] flex items-center justify-between">
-                      <div>
-                        <p className="text-xs font-semibold text-white">Default Chart Interval</p>
-                        <p className="text-[10px] text-gray-500 mt-0.5">Standard timeframe period loaded by charts.</p>
-                      </div>
-                      <select 
-                        value={prefForm.chartInterval}
-                        onChange={(e) => {
-                          setPrefForm(prev => ({ ...prev, chartInterval: e.target.value }));
-                          showToast(`Default chart interval updated to ${e.target.value}`);
-                        }}
-                        className="bg-[#05080a] border border-[#1e262c] text-xs text-white rounded-lg px-2.5 py-1.5 focus:outline-none"
-                      >
-                        <option value="1m">1 minute</option>
-                        <option value="5m">5 minutes</option>
-                        <option value="15m">15 minutes</option>
-                        <option value="1h">1 hour</option>
-                        <option value="1d">1 day (Default)</option>
-                      </select>
-                    </div>
-                  </div>
-
-                  {/* Risk Profile segment */}
-                  <div className="p-4 rounded-2xl bg-[#080d11]/50 border border-[#1c242b] space-y-3">
-                    <div>
-                      <p className="text-xs font-semibold text-white">Risk Level Profiling</p>
-                      <p className="text-[10px] text-gray-500 mt-0.5">Determine the system's recommended trading volatility guardrails.</p>
-                    </div>
-                    <div className="grid grid-cols-3 gap-2">
-                      {[
-                        { id: "low", label: "Low Risk", color: "text-emerald-400 bg-emerald-500/10 border-emerald-500/20" },
-                        { id: "medium", label: "Medium Balanced", color: "text-amber-400 bg-amber-500/10 border-amber-500/20" },
-                        { id: "high", label: "High Aggressive", color: "text-red-400 bg-red-500/10 border-red-500/20" }
-                      ].map((risk) => {
-                        const isSel = prefForm.riskLevel === risk.id;
-                        return (
-                          <button
-                            key={risk.id}
-                            onClick={() => {
-                              setPrefForm(prev => ({ ...prev, riskLevel: risk.id }));
-                              showToast(`Risk profile set to ${risk.label}`);
-                            }}
-                            className={`py-2.5 rounded-xl border text-xs font-semibold transition-all cursor-pointer ${
-                              isSel 
-                                ? risk.color 
-                                : "bg-transparent border-transparent text-gray-400 hover:text-white"
-                            }`}
-                          >
-                            {risk.label}
-                          </button>
-                        );
-                      })}
-                    </div>
-                  </div>
-
-                  {/* Exchanges selection */}
-                  <div className="p-4 rounded-2xl bg-[#080d11]/50 border border-[#1c242b] flex items-center justify-between">
-                    <div>
-                      <p className="text-xs font-semibold text-white">Preferred Exchange Liquidity Source</p>
-                      <p className="text-[10px] text-gray-500 mt-0.5">Select standard ledger network used to execute orders.</p>
-                    </div>
-                    <div className="flex gap-2">
-                      {["TradePulse Pro", "Binance Pool", "Coinbase Ledger"].map((ex) => {
-                        const isSel = prefForm.preferredExchange === ex;
-                        return (
-                          <button
-                            key={ex}
-                            onClick={() => {
-                              setPrefForm(prev => ({ ...prev, preferredExchange: ex }));
-                              showToast(`Exchange source changed to ${ex}`);
-                            }}
-                            className={`px-3 py-1.5 rounded-lg border text-[10px] font-bold tracking-wider uppercase cursor-pointer transition-all ${
-                              isSel
-                                ? "bg-[#162028] border-[#2c3b49] text-white"
-                                : "bg-transparent border-transparent text-gray-500 hover:text-white"
-                            }`}
-                          >
-                            {ex.split(" ")[0]}
-                          </button>
-                        );
-                      })}
-                    </div>
-                  </div>
-                </div>
-              )}
-
-              {/* TAB 6: AI ASSISTANT SETTINGS */}
-              {activeTab === "AI" && (
-                <div className="p-6 space-y-6 flex-1 flex flex-col">
-                  <div>
-                    <h3 className="text-lg font-bold text-white tracking-wide">Pulse AI Assistant Settings</h3>
-                    <p className="text-gray-500 text-xs mt-1">Fine-tune your cognitive trading assistant, response layouts, and prompt catalogs.</p>
-                  </div>
-
-                  {/* AI switches */}
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div className="flex items-center justify-between p-4 rounded-xl bg-[#080c0f] border border-[#1e262c]">
-                      <div>
-                        <p className="text-xs font-semibold text-white">Enable Pulse AI Copilot</p>
-                        <p className="text-[10px] text-gray-500 mt-0.5">Activate the floating assistant chatbot.</p>
-                      </div>
-                      <CustomSwitch
-                        checked={aiSettings.enablePulseAi}
-                        onChange={() => setAiSettings(prev => ({ ...prev, enablePulseAi: !prev.enablePulseAi }))}
-                      />
-                    </div>
-
-                    <div className="flex items-center justify-between p-4 rounded-xl bg-[#080c0f] border border-[#1e262c]">
-                      <div>
-                        <p className="text-xs font-semibold text-white">Automate Sentiment Analysis</p>
-                        <p className="text-[10px] text-gray-500 mt-0.5">Automatically analyze market news for positive/negative signs.</p>
-                      </div>
-                      <CustomSwitch
-                        checked={aiSettings.sentimentAnalysis}
-                        onChange={() => setAiSettings(prev => ({ ...prev, sentimentAnalysis: !prev.sentimentAnalysis }))}
-                      />
-                    </div>
-
-                    <div className="flex items-center justify-between p-4 rounded-xl bg-[#080c0f] border border-[#1e262c]">
-                      <div>
-                        <p className="text-xs font-semibold text-white">Show Suggested Prompts</p>
-                        <p className="text-[10px] text-gray-500 mt-0.5">Display quick command chips in chat window.</p>
-                      </div>
-                      <CustomSwitch
-                        checked={aiSettings.suggestedPrompts}
-                        onChange={() => setAiSettings(prev => ({ ...prev, suggestedPrompts: !prev.suggestedPrompts }))}
-                      />
-                    </div>
-
-                    <div className="p-4 rounded-xl bg-[#080c0f] border border-[#1e262c] flex items-center justify-between">
-                      <div>
-                        <p className="text-xs font-semibold text-white">AI Response Style</p>
-                        <p className="text-[10px] text-gray-500 mt-0.5">Specify standard styling of generated charts/text.</p>
-                      </div>
-                      <select 
-                        value={aiSettings.responseStyle}
-                        onChange={(e) => {
-                          setAiSettings(prev => ({ ...prev, responseStyle: e.target.value }));
-                          showToast(`AI response tone set to ${e.target.value}`);
-                        }}
-                        className="bg-[#05080a] border border-[#1e262c] text-xs text-white rounded-lg px-2.5 py-1.5 focus:outline-none"
-                      >
-                        <option value="concise">Concise Summary</option>
-                        <option value="detailed">In-depth Breakdown</option>
-                        <option value="analytical">Data & Metrics (Default)</option>
-                        <option value="playful">Conversational</option>
-                      </select>
-                    </div>
-                  </div>
-
-                  {/* Chat logs & prompt actions */}
-                  <div className="p-4 rounded-2xl bg-[#080d11]/50 border border-[#1c242b] space-y-4">
-                    <div>
-                      <p className="text-xs font-semibold text-white">Suggested Assistant Direct Prompt Commands</p>
-                      <p className="text-[10px] text-gray-500 mt-0.5">Predefined shortcuts used to trigger deep analysis immediately:</p>
-                    </div>
-                    <div className="flex flex-wrap gap-2">
-                      {[
-                        "Analyze Solana 24h sentiment",
-                        "Optimize my portfolio holdings ratio",
-                        "Evaluate tax liability on completed transactions",
-                        "What is the resistance level of BTC?"
-                      ].map((prompt) => (
-                        <button
-                          key={prompt}
-                          onClick={() => showToast(`Trigger prompt: "${prompt}"`)}
-                          className="px-3 py-1.5 rounded-lg bg-[#121920] border border-[#1e262c] hover:border-gray-600 text-[10px] text-gray-400 hover:text-white transition-all cursor-pointer"
-                        >
-                          &ldquo;{prompt}&rdquo;
-                        </button>
-                      ))}
-                    </div>
-
-                    <div className="pt-4 border-t border-[#1c242b] flex justify-between items-center">
-                      <div>
-                        <p className="text-xs font-semibold text-white">Clear Pulse AI Chat History</p>
-                        <p className="text-[10px] text-gray-500 mt-0.5">Erase all past messages, prompt tokens, and context histories from local cache.</p>
-                      </div>
-                      <button
-                        onClick={() => showToast("Pulse AI chat history has been permanently erased.")}
-                        className="px-3.5 py-2 rounded-xl border border-red-500/20 hover:bg-red-500/10 text-xs font-semibold text-red-400 transition-all cursor-pointer"
-                      >
-                        CLEAR HISTORY
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              )}
 
               {/* TAB 7: PAYMENT & WALLET SETTINGS */}
               {activeTab === "PAYMENTS" && (

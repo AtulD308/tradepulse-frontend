@@ -25,30 +25,15 @@ import {
 import { getUserWallet } from "@/Redux/Wallet/Action";
 import { 
   MessageCircle, 
-  Brain, 
-  Sparkles, 
   Send, 
-  Terminal, 
   Newspaper, 
   ExternalLink, 
   ArrowUpRight, 
-  ShieldCheck, 
-  Flame,
-  ChevronRight,
-  Bookmark,
-  Share2,
-  ArrowRight
+  ShieldCheck
 } from "lucide-react";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { sendMessage } from "@/Redux/Chat/Action";
 import chatbotIcon from "@/assets/chatbot_icon.png";
-
-// AI Market Insights - Preset responses
-const PRESET_ANSWERS = {
-  btc: "Based on current technical indicators and macro liquidity projections, Bitcoin (BTC) exhibits strong accumulation patterns in the $72,000–$75,000 range. Institutional inflows via spot ETFs are averaging $340M daily. Moving average convergence-divergence (MACD) on the weekly chart remains securely bullish. We project a realistic testing of the $92,000–$100,000 range in Q3 2026, supported by decreasing exchange reserves and positive regulatory tailwinds.",
-  flipping: "While Solana (SOL) has temporarily flipped Ethereum in daily DEX trading volume due to high meme-token velocity and lower transaction fees, Ethereum (ETH) retains massive structural dominance in total value locked (TVL), layer-2 security settlement, and institutional trust (including spot ETFs). A permanent flip in market cap is statistically unlikely in the short term, but Solana remains a premium high-beta asset outperforming in network usage.",
-  dencun: "The Ethereum Dencun upgrade (specifically EIP-4844 'proto-danksharding') introduced transient data blobs to drastically lower transaction fees on Layer-2 rollup networks like Arbitrum, Optimism, and Base. Average gas fees on L2s dropped by over 90% (often below $0.01 per trade). This changes the game for consumer applications and retail trades, strengthening Ethereum's role as a global security layer while shifting active transaction execution to Layer-2s."
-};
 
 // Premium High-Fidelity Crypto News
 const NEWS_DATA = [
@@ -57,7 +42,7 @@ const NEWS_DATA = [
     title: "Bitcoin Surges past $75k: Institutional Inflow Reaches Unprecedented Peak",
     summary: "Institutional demand for Bitcoin continues to break records as net inflows into spot ETFs hit a new peak of $1.2B in a single week. Analysts cite sovereign wealth fund interest as the primary driver behind the massive liquidity squeeze.",
     tag: "ETF INFLOWS",
-    tagColor: "bg-[#00ffa3]/15 text-[#00ffa3]",
+    tagColor: "bg-white/10 text-white",
     time: "2 hours ago",
     readTime: "3 min read",
     author: "Elena Rostova, Chief Editor",
@@ -98,146 +83,6 @@ const NEWS_DATA = [
   }
 ];
 
-// Sub-component: Fear & Greed Index Dial
-const FearGreedIndex = () => {
-  const value = 76; // Greed
-  const radius = 50;
-  const strokeWidth = 8;
-  const circumference = Math.PI * radius; // ~157.1
-  const offset = circumference - (value / 100) * circumference;
-
-  return (
-    <div className="flex flex-col items-center justify-center p-6 rounded-2xl bg-surface-container-low border border-outline-variant/30 backdrop-blur-md relative overflow-hidden h-full group hover:border-[#00ffa3]/30 transition-all duration-300">
-      <div className="absolute -right-10 -bottom-10 w-32 h-32 bg-[#00ffa3]/5 blur-3xl rounded-full group-hover:bg-[#00ffa3]/10 transition-all duration-300"></div>
-      
-      <div className="flex items-center gap-1.5 self-start mb-1 text-primary">
-        <Flame className="w-4 h-4 text-orange-400 animate-pulse" />
-        <p className="text-sm font-bold">Fear & Greed Index</p>
-      </div>
-      <p className="text-[11px] text-on-surface-variant self-start mb-4">Real-time market sentiment aggregate</p>
-      
-      <div className="relative w-40 h-24 flex items-center justify-center mt-2">
-        <svg className="w-full h-full" viewBox="0 0 120 70">
-          <defs>
-            <linearGradient id="sentimentGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" stopColor="#ffb4ab" />
-              <stop offset="50%" stopColor="#ffe082" />
-              <stop offset="100%" stopColor="#00e290" />
-            </linearGradient>
-          </defs>
-          {/* Track */}
-          <path
-            d="M 15 60 A 45 45 0 0 1 105 60"
-            fill="none"
-            stroke="rgba(255,255,255,0.06)"
-            strokeWidth={strokeWidth}
-            strokeLinecap="round"
-          />
-          {/* Value Arc */}
-          <path
-            d="M 15 60 A 45 45 0 0 1 105 60"
-            fill="none"
-            stroke="url(#sentimentGradient)"
-            strokeWidth={strokeWidth}
-            strokeLinecap="round"
-            strokeDasharray={circumference}
-            strokeDashoffset={offset}
-            className="transition-all duration-1000 ease-out"
-          />
-        </svg>
-        <div className="absolute bottom-0 text-center flex flex-col items-center">
-          <span className="text-2xl font-black text-primary font-data-mono">{value}</span>
-          <span className="text-[9px] font-bold text-[#00e290] uppercase tracking-widest bg-[#00e290]/10 px-2 py-0.5 rounded-full border border-[#00e290]/20">
-            Greed
-          </span>
-        </div>
-      </div>
-      
-      <div className="flex justify-between w-full text-[9px] text-on-surface-variant font-semibold mt-4 px-1 border-t border-outline-variant/15 pt-3">
-        <span>Fear (20)</span>
-        <span>Neutral (50)</span>
-        <span>Greed (80)</span>
-      </div>
-    </div>
-  );
-};
-
-const levelDetails = {
-  btc: {
-    title: "Bitcoin (BTC) Sentiment Profile",
-    colorClass: "from-[#00ffa3]/10 to-teal-500/5 hover:border-[#00ffa3]/30",
-    glowClass: "bg-[#00ffa3]/5",
-    badgeColor: "bg-[#00ffa3]/15 text-[#00ffa3] border-[#00ffa3]/30",
-    summary: "Strong institutional accumulation and positive social hype are keeping Bitcoin in a highly bullish phase.",
-    socialHype: "High (84/100)",
-    whaleStance: "Bullish Accumulation",
-    outlook: "Highly Bullish"
-  },
-  eth: {
-    title: "Ethereum (ETH) Sentiment Profile",
-    colorClass: "from-[#00e290]/10 to-blue-500/5 hover:border-[#00e290]/30",
-    glowClass: "bg-[#00e290]/5",
-    badgeColor: "bg-[#00e290]/15 text-[#00e290] border-[#00e290]/30",
-    summary: "Steady network utility and growing retail interest indicate solid medium-term support despite near-term volatility.",
-    socialHype: "Moderate (67/100)",
-    whaleStance: "Steady Holding",
-    outlook: "Mildly Bullish"
-  },
-  sol: {
-    title: "Solana (SOL) Sentiment Profile",
-    colorClass: "from-purple-500/10 to-fuchsia-500/5 hover:border-purple-500/30",
-    glowClass: "bg-purple-500/5",
-    badgeColor: "bg-purple-500/15 text-purple-300 border-purple-500/30",
-    summary: "Massive decentralized finance (DeFi) activity and social media buzz are driving extreme near-term momentum.",
-    socialHype: "Extreme (92/100)",
-    whaleStance: "Aggressive Buy-ins",
-    outlook: "Very Bullish"
-  }
-};
-
-const getLevelAdvice = (coin) => {
-  if (coin === "btc") {
-    return `>>> INITIATING BITCOIN (BTC) SENTIMENT ANALYSIS...
-[MARKET STANCE] Overall Sentiment: Highly Bullish (85% Positive)
-
-[SOCIAL HYPE] 84/100 (High Activity)
-Social platforms show a strong surge in positive mentions. Discussions are focused on long-term value, spot ETF buying, and general market optimism rather than panic.
-
-[WHALE ACTIVITY] Active Accumulation
-Large wallets (whales) are moving their Bitcoin off exchanges into secure cold storage. This indicates they plan to hold for the long term, reducing immediate selling pressure.
-
-[RETAIL BEHAVIOR] FOMO (Fear of Missing Out) is building up gradually, but retail buyers remain mostly rational. Search trends are steady but not yet at bubble-like peaks.
-
-[SUMMARY OUTLOOK] The market is feeling very optimistic. With institutional backing and strong holding behavior from big investors, the path of least resistance remains upward. Avoid emotional trading and watch major support levels.`;
-  } else if (coin === "eth") {
-    return `>>> INITIATING ETHEREUM (ETH) SENTIMENT ANALYSIS...
-[MARKET STANCE] Overall Sentiment: Moderately Bullish (72% Positive)
-
-[SOCIAL HYPE] 67/100 (Steady Interest)
-Social media sentiment is steady. Discussions revolve around low Layer-2 fees following the Dencun upgrade and Ethereum's secure position as the leading smart-contract platform.
-
-[WHALE ACTIVITY] Solid Holding
-Whale addresses are keeping their funds stable, with slight accumulation noticed in decentralized staking pools. No signs of large panic selling.
-
-[RETAIL BEHAVIOR] Retail traders are actively using Ethereum scaling networks (like Base and Arbitrum) due to low fees, creating a strong utility foundation.
-
-[SUMMARY OUTLOOK] Solid, healthy sentiment. While Ethereum is not moving as fast as high-beta assets, its underlying usage and strong whale base provide a solid floor. A steady, reliable performer for patient market participants.`;
-  } else {
-    return `>>> INITIATING SOLANA (SOL) SENTIMENT ANALYSIS...
-[MARKET STANCE] Overall Sentiment: Extremely Bullish (91% Positive)
-
-[SOCIAL HYPE] 92/100 (Extreme Buzz)
-Solana is currently the most talked-about cryptocurrency across all social channels. High excitement around meme tokens, fast transactions, and extremely cheap fees is driving constant hype.
-
-[WHALE ACTIVITY] Aggressive Buying
-On-chain data shows high-net-worth investors (whales) aggressively swapping other assets to buy Solana, supporting the rapid price rises.
-
-[RETAIL BEHAVIOR] High Retail Euphoria
-A huge number of active retail wallets are trading daily on Solana DEXs. Transaction counts are hitting records, showing high active retail engagement.
-
-[SUMMARY OUTLOOK] Extreme momentum. While the hype is incredibly strong and driving prices higher, keep in mind that high excitement can lead to sudden short-term price swings. A very high-reward but highly active market to navigate.`;
-  }
-};
 
 
 const Home = () => {
@@ -253,12 +98,7 @@ const Home = () => {
     return localStorage.getItem("sidebar-collapsed") === "true";
   });
 
-  // AI Insights sandbox state variables
-  const [aiPromptText, setAiPromptText] = useState("");
-  const [aiTerminalText, setAiTerminalText] = useState("TradePulse Intelligence Node v1.2-AI initialized.\nReady to run technical sentiment and blockchain protocol queries...\nSelect a preset prompt below or type your custom analysis.");
-  const [aiIsTyping, setAiIsTyping] = useState(false);
-  const [selectedLevel, setSelectedLevel] = useState("btc");
-  const [hasInitialTriggered, setHasInitialTriggered] = useState(false);
+
 
   // News details modal state
   const [selectedNews, setSelectedNews] = useState(null);
@@ -307,14 +147,7 @@ const Home = () => {
     }
   }, [auth.jwt, dispatch]);
 
-  useEffect(() => {
-    if (wallet?.userWallet?.balance !== undefined && !hasInitialTriggered) {
-      setHasInitialTriggered(true);
-      setTimeout(() => {
-        triggerAiResponse("btc_sentiment");
-      }, 500);
-    }
-  }, [wallet?.userWallet, hasInitialTriggered]);
+
 
   useEffect(() => {
     dispatch(
@@ -422,63 +255,7 @@ const Home = () => {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, []);
 
-  // Triggering the animated AI Response terminal
-  const triggerAiResponse = (promptKey, customPromptValue = "") => {
-    if (aiIsTyping) return;
-    
-    let textToStream = "";
-    let displayPrompt = "";
-    
-    if (promptKey.endsWith("_sentiment")) {
-      const coinKey = promptKey.split("_")[0];
-      textToStream = getLevelAdvice(coinKey);
-      displayPrompt = `Generate real-time AI market sentiment analysis for ${coinKey.toUpperCase()}`;
-    } else if (promptKey === "custom") {
-      if (!customPromptValue.trim()) return;
-      displayPrompt = customPromptValue;
-      textToStream = `Analyzing custom query: "${customPromptValue}"...\n\nTradePulse AI Engine Aggregation:\nSentiment index: 68% Bullish.\nLiquidity metrics: Moderate accumulation. Order-book support is highly stable near current EMA channels.\nRecommendation: Maintain structural allocations with strict leverage protection. Volume profiles imply minor near-term expansion.`;
-      setAiPromptText("");
-    } else {
-      displayPrompt = promptKey === "btc" 
-        ? "Will BTC hit $100k in 2026?"
-        : promptKey === "flipping" 
-          ? "Is Solana flipping Ethereum soon?"
-          : "Explain the impact of the Dencun upgrade";
-      textToStream = PRESET_ANSWERS[promptKey];
-    }
 
-    setAiIsTyping(true);
-    setAiTerminalText("");
-    
-    const thinkingLines = [
-      `>> Executing prompt: "${displayPrompt}"`,
-      ">> Querying neural network databases...",
-      ">> Calculating relative volume index & sentiment averages...",
-      ">> Processing blockchain transaction telemetry...",
-      ">> Analysis complete. Generating structural intelligence:\n\n"
-    ];
-
-    let thinkIdx = 0;
-    const printThinking = () => {
-      if (thinkIdx < thinkingLines.length) {
-        setAiTerminalText((prev) => prev + thinkingLines[thinkIdx] + "\n");
-        thinkIdx++;
-        setTimeout(printThinking, 300);
-      } else {
-        let charIdx = 0;
-        const interval = setInterval(() => {
-          if (charIdx < textToStream.length) {
-            setAiTerminalText((prev) => prev + textToStream.charAt(charIdx));
-            charIdx++;
-          } else {
-            clearInterval(interval);
-            setAiIsTyping(false);
-          }
-        }, 12);
-      }
-    };
-    printThinking();
-  };
 
   const handleNewsCardClick = (newsItem) => {
     setSelectedNews(newsItem);
@@ -522,8 +299,8 @@ const Home = () => {
                     onClick={() => setCategory("all")}
                     className={`px-4 py-1.5 rounded-full text-xs font-bold transition-all ${
                       category === "all"
-                        ? "bg-[#00ffa3] text-[#007146]"
-                        : "bg-surface-container-high text-on-surface-variant hover:bg-[#323538] hover:text-white"
+                        ? "bg-white text-black shadow-sm"
+                        : "bg-white/5 text-gray-400 hover:bg-white/10 hover:text-white"
                     }`}
                   >
                     All
@@ -533,8 +310,8 @@ const Home = () => {
                     onClick={() => setCategory("top50")}
                     className={`px-4 py-1.5 rounded-full text-xs font-bold transition-all ${
                       category === "top50"
-                        ? "bg-[#00ffa3] text-[#007146]"
-                        : "bg-surface-container-high text-on-surface-variant hover:bg-[#323538] hover:text-white"
+                        ? "bg-white text-black shadow-sm"
+                        : "bg-white/5 text-gray-400 hover:bg-white/10 hover:text-white"
                     }`}
                   >
                     Top 50
@@ -544,8 +321,8 @@ const Home = () => {
                     onClick={() => setCategory("defi")}
                     className={`px-4 py-1.5 rounded-full text-xs font-bold transition-all ${
                       category === "defi"
-                        ? "bg-[#00ffa3] text-[#007146]"
-                        : "bg-surface-container-high text-on-surface-variant hover:bg-[#323538] hover:text-white"
+                        ? "bg-white text-black shadow-sm"
+                        : "bg-white/5 text-gray-400 hover:bg-white/10 hover:text-white"
                     }`}
                   >
                     DeFi
@@ -604,35 +381,35 @@ const Home = () => {
 
                 {/* Price / Coin Details snapshot block styled elegantly */}
                 {coin.coinDetails && (
-                  <div className="px-6 py-4 border-t border-outline-variant/30 flex justify-between items-center bg-surface-container-low/50 rounded-xl mt-4 z-10 w-full text-left">
-                    <div className="flex gap-5 items-center">
-                      <Avatar className="w-10 h-10 border border-outline-variant">
+                  <div className="px-4 py-3 border-t border-outline-variant/30 flex flex-wrap justify-between items-center bg-surface-container-low/50 rounded-xl mt-4 z-10 w-full text-left gap-3 pr-6">
+                    <div className="flex gap-3 items-center min-w-0 flex-1">
+                      <Avatar className="w-9 h-9 border border-outline-variant shrink-0">
                         <AvatarImage src={coin.coinDetails?.image?.large} />
-                        <AvatarFallback className="bg-surface-container-high text-primary font-bold">
+                        <AvatarFallback className="bg-surface-container-high text-primary font-bold text-xs">
                           {coin.coinDetails?.symbol?.toUpperCase() || "C"}
                         </AvatarFallback>
                       </Avatar>
 
-                      <div>
+                      <div className="min-w-0">
                         <div className="flex items-center gap-2">
-                          <p className="font-bold text-primary">{coin.coinDetails?.symbol?.toUpperCase()}</p>
-                          <span className="w-1.5 h-1.5 rounded-full bg-on-surface-variant/40"></span>
-                          <p className="text-on-surface-variant text-sm">{coin.coinDetails?.name}</p>
+                          <p className="font-bold text-primary text-sm truncate">{coin.coinDetails?.symbol?.toUpperCase()}</p>
+                          <span className="w-1 h-1 rounded-full bg-on-surface-variant/40 shrink-0"></span>
+                          <p className="text-on-surface-variant text-xs truncate">{coin.coinDetails?.name}</p>
                         </div>
 
-                        <div className="flex items-baseline gap-4 mt-1">
-                          <p className="text-2xl font-bold text-primary font-data-mono">
+                        <div className="flex flex-col mt-1">
+                          <p className="text-lg font-bold text-primary font-data-mono whitespace-nowrap leading-tight">
                             ${coin.coinDetails?.market_data?.current_price?.usd?.toLocaleString() || "0.00"}
                           </p>
 
                           <p
-                            className={`text-sm font-bold font-data-mono flex items-center animate-pulse-slow ${
+                            className={`text-xs font-bold font-data-mono flex items-center animate-pulse-slow whitespace-nowrap mt-1 ${
                               coin.coinDetails?.market_data?.market_cap_change_percentage_24h < 0
-                                ? "text-[#ffb4ab] price-down"
-                                : "text-[#00e290] price-up"
+                                ? "text-rose-400 price-down"
+                                : "text-emerald-400 price-up"
                             }`}
                           >
-                            <span className="material-symbols-outlined text-lg mr-0.5">
+                            <span className="material-symbols-outlined text-sm mr-0.5 shrink-0">
                               {coin.coinDetails?.market_data?.market_cap_change_percentage_24h < 0
                                 ? "arrow_drop_down"
                                 : "arrow_drop_up"}
@@ -645,10 +422,10 @@ const Home = () => {
 
                     <Button
                       onClick={() => navigate(`/market/${coin.coinDetails?.id}`)}
-                      className="bg-[#00ffa3] hover:bg-[#00ffa3]/80 text-[#007146] font-bold text-xs px-4 py-2.5 rounded-xl transition-all shadow-md flex items-center gap-1.5"
+                      className="bg-white hover:bg-gray-200 text-black font-bold text-xs px-3 py-2 rounded-xl transition-all shadow-md flex items-center gap-1.5 shrink-0 whitespace-nowrap"
                     >
-                      Trade Asset
-                      <ArrowUpRight className="w-4 h-4" />
+                      Trade
+                      <ArrowUpRight className="w-3.5 h-3.5" />
                     </Button>
                   </div>
                 )}
@@ -658,14 +435,14 @@ const Home = () => {
           {/* Subtle scroll down indicator */}
           <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 text-[10px] text-on-surface-variant font-medium pointer-events-none animate-pulse-slow">
             <span>Scroll for News & Insights</span>
-            <span className="material-symbols-outlined text-xs animate-bounce text-[#00ffa3]">keyboard_double_arrow_down</span>
+            <span className="material-symbols-outlined text-xs animate-bounce text-gray-400">keyboard_double_arrow_down</span>
           </div>
         </div>
 
         {/* Fold 2: Market News Section */}
         <section className="px-8 pt-16 pb-8 max-w-7xl mx-auto w-full z-10 shrink-0">
           <div className="flex items-center gap-2 mb-8 border-b border-outline-variant/20 pb-4">
-            <Newspaper className="w-5 h-5 text-[#00ffa3]" />
+            <Newspaper className="w-5 h-5 text-white" />
             <div>
               <h2 className="text-xl md:text-2xl font-bold text-primary tracking-tight">Market News & Intelligence</h2>
               <p className="text-xs text-on-surface-variant mt-0.5">Latest updates driving digital and decentralized capital markets</p>
@@ -678,14 +455,14 @@ const Home = () => {
               <div
                 key={item.id}
                 onClick={() => handleNewsCardClick(item)}
-                className="flex flex-col justify-between p-6 rounded-2xl bg-surface-container-low border border-outline-variant/30 backdrop-blur-md relative overflow-hidden group cursor-pointer hover:border-[#00ffa3]/30 hover:shadow-lg transition-all duration-300"
+                className="flex flex-col justify-between p-6 rounded-2xl bg-surface-container-low border border-outline-variant/30 backdrop-blur-md relative overflow-hidden group cursor-pointer hover:border-primary/30 hover:shadow-lg transition-all duration-300"
               >
                 {/* Background soft glow on hover */}
-                <div className="absolute inset-0 bg-[#00ffa3]/[0.01] opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
+                <div className="absolute inset-0 bg-white/[0.01] opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
 
                 <div>
                   <div className="flex items-center justify-between mb-4">
-                    <span className={`px-2.5 py-0.5 rounded-full text-[9px] font-black uppercase tracking-wider border border-[#00ffa3]/10 ${item.tagColor}`}>
+                    <span className={`px-2.5 py-0.5 rounded-full text-[9px] font-black uppercase tracking-wider border border-white/10 ${item.tagColor}`}>
                       {item.tag}
                     </span>
                     <div className="flex items-center gap-2 text-[10px] text-on-surface-variant font-medium">
@@ -695,7 +472,7 @@ const Home = () => {
                     </div>
                   </div>
 
-                  <h3 className="text-sm md:text-base font-bold text-primary leading-snug group-hover:text-[#00ffa3] transition-colors line-clamp-2">
+                  <h3 className="text-sm md:text-base font-bold text-primary leading-snug group-hover:text-white transition-colors line-clamp-2">
                     {item.title}
                   </h3>
 
@@ -706,7 +483,7 @@ const Home = () => {
 
                 <div className="flex items-center justify-between border-t border-outline-variant/15 mt-6 pt-4 text-xs font-semibold text-primary">
                   <span className="text-[11px] text-on-surface-variant">By {item.author}</span>
-                  <button className="flex items-center gap-1 text-[#00ffa3] hover:text-[#00ffa3]/80 transition-colors font-bold text-[11px]">
+                  <button className="flex items-center gap-1 text-white hover:text-gray-300 transition-colors font-bold text-[11px]">
                     Read More 
                     <ArrowUpRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
                   </button>
@@ -714,232 +491,19 @@ const Home = () => {
               </div>
             ))}
           </div>
-
-
         </section>
 
-        {/* Fold 3: Premium AI Market Insights Section */}
-        <section className="px-8 py-12 max-w-7xl mx-auto w-full z-10 shrink-0">
-          <div className="flex items-center justify-between mb-8 border-b border-outline-variant/20 pb-4">
-            <div>
-              <div className="flex items-center gap-2">
-                <Brain className="w-5 h-5 text-[#00ffa3] animate-pulse" />
-                <h2 className="text-xl md:text-2xl font-bold text-primary tracking-tight">AI Market Insights</h2>
-              </div>
-              <p className="text-xs text-on-surface-variant mt-1">Real-time technical analysis & sentiment aggregation</p>
-            </div>
-            
-            <div className="flex items-center gap-2 bg-[#00ffa3]/10 border border-[#00ffa3]/20 px-3 py-1 rounded-full animate-pulse-slow">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#00ffa3]"></span>
-              <span className="text-[10px] font-bold text-[#00ffa3] tracking-widest font-data-mono">INTELLIGENCE NETWORK ONLINE</span>
-            </div>
-          </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            {/* Sentiment Meter Dial */}
-            <div className="lg:col-span-1">
-              <FearGreedIndex />
-            </div>
 
-            {/* AI Custom Query Terminal Sandbox */}
-            <div className="lg:col-span-2 flex flex-col p-6 rounded-2xl bg-surface-container-low border border-outline-variant/30 backdrop-blur-md relative overflow-hidden h-full group hover:border-[#00ffa3]/30 transition-all duration-300 text-left">
-              <div className="absolute -left-10 -top-10 w-32 h-32 bg-[#00ffa3]/5 blur-3xl rounded-full group-hover:bg-[#00ffa3]/10 transition-all duration-300"></div>
-
-              <div className="flex items-center justify-between mb-4 border-b border-outline-variant/10 pb-3">
-                <div className="flex items-center gap-2">
-                  <Terminal className="w-4 h-4 text-emerald-400" />
-                  <span className="text-xs font-bold text-emerald-400 font-data-mono">tradepulse_ai_sandbox.sh</span>
-                </div>
-                <div className="flex items-center gap-1.5">
-                  <span className="w-2.5 h-2.5 rounded-full bg-red-500/40"></span>
-                  <span className="w-2.5 h-2.5 rounded-full bg-yellow-500/40"></span>
-                  <span className="w-2.5 h-2.5 rounded-full bg-green-500/40"></span>
-                </div>
-              </div>
-
-              {/* Premium Experience Level Selector Tab Group */}
-              <div className="flex bg-[#0b0e11] border border-outline-variant/30 rounded-xl p-1 mb-4 w-full">
-                {["btc", "eth", "sol"].map((coin) => {
-                  const isActive = selectedLevel === coin;
-                  const label = coin === "btc" ? "🪙 Bitcoin (BTC)" : coin === "eth" ? "🔷 Ethereum (ETH)" : "☀️ Solana (SOL)";
-                  return (
-                    <button
-                      key={coin}
-                      disabled={aiIsTyping}
-                      onClick={() => {
-                        setSelectedLevel(coin);
-                        triggerAiResponse(coin + "_sentiment");
-                      }}
-                      className={`flex-1 py-2 text-center text-xs font-bold rounded-lg transition-all duration-300 disabled:opacity-50 ${
-                        isActive
-                          ? "bg-[#00ffa3]/15 text-[#00ffa3] border border-[#00ffa3]/30 shadow-[0_0_10px_rgba(0,255,163,0.08)]"
-                          : "text-on-surface-variant hover:text-white border border-transparent hover:bg-white/[0.02]"
-                      }`}
-                    >
-                      {label}
-                    </button>
-                  );
-                })}
-              </div>
-
-              {/* Glowing Console Output */}
-              <div className="flex-1 min-h-[140px] bg-[#0b0e11] border border-outline-variant/30 rounded-xl p-4 mb-4 text-xs font-data-mono text-[#00ffa3]/90 overflow-y-auto max-h-[180px] custom-scrollbar shadow-inner select-text text-left">
-                <pre className="whitespace-pre-wrap leading-relaxed">{aiTerminalText}</pre>
-                {aiIsTyping && <span className="inline-block w-2 h-4 ml-1 bg-[#00ffa3] animate-blink"></span>}
-              </div>
-
-              {/* Input analysis box & Preset Click Prompts wrapper */}
-              <div className="flex flex-col md:flex-row gap-3 mb-4 items-stretch md:items-center justify-between">
-                {/* Preset Click Prompts */}
-                <div className="flex flex-wrap gap-2">
-                  <button
-                    disabled={aiIsTyping}
-                    onClick={() => triggerAiResponse("btc")}
-                    className="px-2.5 py-1.5 rounded-lg text-[9px] font-bold bg-[#0b0e11] border border-outline-variant/30 text-on-surface-variant hover:border-[#00ffa3] hover:text-white transition-all disabled:opacity-50"
-                  >
-                    💭 BTC $100k?
-                  </button>
-                  <button
-                    disabled={aiIsTyping}
-                    onClick={() => triggerAiResponse("flipping")}
-                    className="px-2.5 py-1.5 rounded-lg text-[9px] font-bold bg-[#0b0e11] border border-outline-variant/30 text-on-surface-variant hover:border-[#00ffa3] hover:text-white transition-all disabled:opacity-50"
-                  >
-                    💭 SOL Flips ETH?
-                  </button>
-                  <button
-                    disabled={aiIsTyping}
-                    onClick={() => triggerAiResponse("dencun")}
-                    className="px-2.5 py-1.5 rounded-lg text-[9px] font-bold bg-[#0b0e11] border border-outline-variant/30 text-on-surface-variant hover:border-[#00ffa3] hover:text-white transition-all disabled:opacity-50"
-                  >
-                    💭 Dencun
-                  </button>
-                </div>
-
-                {/* Input query field */}
-                <div className="flex gap-2 flex-1 max-w-lg">
-                  <input
-                    disabled={aiIsTyping}
-                    className="flex-1 bg-[#0b0e11] border border-outline-variant/30 rounded-xl px-4 py-2 text-xs text-primary placeholder-on-surface-variant/60 focus:outline-none focus:ring-1 focus:ring-[#00ffa3] disabled:opacity-50"
-                    placeholder="Ask a custom crypto question..."
-                    value={aiPromptText}
-                    onChange={(e) => setAiPromptText(e.target.value)}
-                    onKeyDown={(e) => e.key === "Enter" && triggerAiResponse("custom", aiPromptText)}
-                  />
-                  <Button
-                    disabled={aiIsTyping || !aiPromptText.trim()}
-                    onClick={() => triggerAiResponse("custom", aiPromptText)}
-                    className="bg-[#00ffa3] hover:bg-[#00ffa3]/80 text-[#007146] font-bold flex items-center gap-1 text-[11px] px-3.5 py-2 rounded-xl transition-all shadow-lg shadow-[#00ffa3]/10 disabled:opacity-50"
-                  >
-                    <Sparkles className="w-3.5 h-3.5" />
-                    Analyze
-                  </Button>
-                </div>
-              </div>
-
-              {/* Dynamic AI Trading Compass Card */}
-              {(() => {
-                const activeDetails = levelDetails[selectedLevel || "btc"];
-
-                return (
-                  <div className={`mt-2 p-5 rounded-2xl bg-gradient-to-r ${activeDetails.colorClass} border border-outline-variant/30 relative overflow-hidden transition-all duration-300 group/compass shadow-md text-left`}>
-                    <div className={`absolute right-0 top-0 w-48 h-48 ${activeDetails.glowClass} blur-3xl rounded-full pointer-events-none transition-all duration-300`} />
-                    
-                    <div className="flex flex-col md:flex-row md:items-center justify-between gap-5 relative z-10 w-full">
-                      <div className="flex-1 text-left">
-                        <div className="flex items-center gap-2 mb-2 flex-wrap">
-                          <Sparkles className="w-4 h-4 text-[#00ffa3] animate-pulse" />
-                          <span className={`px-2 py-0.5 rounded text-[9px] font-black tracking-wider uppercase border ${activeDetails.badgeColor}`}>
-                            {(selectedLevel || "btc").toUpperCase()} SENTIMENT
-                          </span>
-                          <span className="text-[10px] text-on-surface-variant font-data-mono font-medium bg-black/30 px-2 py-0.5 rounded border border-outline-variant/10">
-                            Real-Time Outlook
-                          </span>
-                        </div>
-                        
-                        <h3 className="text-base font-extrabold text-primary tracking-tight">
-                          {activeDetails.title}
-                        </h3>
-                        
-                        <p className="text-xs text-on-surface-variant leading-relaxed mt-1.5 max-w-xl">
-                          {activeDetails.summary}
-                        </p>
-
-                        {/* Dynamic Sentiment Indicators */}
-                        <div className="grid grid-cols-3 gap-4 mt-3 max-w-md bg-black/40 border border-outline-variant/20 rounded-xl p-3 font-data-mono">
-                          <div>
-                            <span className="text-[9px] text-on-surface-variant block font-bold uppercase tracking-wider">Social Hype</span>
-                            <span className="text-xs font-black text-[#00ffa3] mt-0.5 block">
-                              {activeDetails.socialHype}
-                            </span>
-                          </div>
-                          <div>
-                            <span className="text-[9px] text-on-surface-variant block font-bold uppercase tracking-wider">Whale Stance</span>
-                            <span className="text-xs font-black text-[#00e290] mt-0.5 block">
-                              {activeDetails.whaleStance}
-                            </span>
-                          </div>
-                          <div>
-                            <span className="text-[9px] text-on-surface-variant block font-bold uppercase tracking-wider">Overall Outlook</span>
-                            <span className="text-xs font-black text-[#00e290] mt-0.5 block">
-                              {activeDetails.outlook}
-                            </span>
-                          </div>
-                        </div>
-                      </div>
-                      
-
-                    </div>
-                  </div>
-                );
-              })()}
-            </div>
-          </div>
-
-          {/* Quick Stats Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">
-            <div className="p-4 rounded-xl bg-surface-container-low/40 border border-outline-variant/20 flex gap-4 items-center">
-              <span className="w-10 h-10 rounded-lg bg-[#00e290]/10 flex items-center justify-center text-[#00e290] font-bold text-sm">
-                BTC
-              </span>
-              <div>
-                <p className="text-[10px] font-bold uppercase tracking-wider text-on-surface-variant">Bitcoin Index Position</p>
-                <p className="text-sm font-black text-primary mt-0.5">🟢 STRONG BULLISH MOMENTUM</p>
-              </div>
-            </div>
-
-            <div className="p-4 rounded-xl bg-surface-container-low/40 border border-outline-variant/20 flex gap-4 items-center">
-              <span className="w-10 h-10 rounded-lg bg-[#ffb4ab]/10 flex items-center justify-center text-[#ffb4ab] font-bold text-sm">
-                ETH
-              </span>
-              <div>
-                <p className="text-[10px] font-bold uppercase tracking-wider text-on-surface-variant">Ethereum Core Pivot</p>
-                <p className="text-sm font-black text-primary mt-0.5">🔴 TESTING EMA RESISTANCE</p>
-              </div>
-            </div>
-
-            <div className="p-4 rounded-xl bg-surface-container-low/40 border border-outline-variant/20 flex gap-4 items-center">
-              <span className="w-10 h-10 rounded-lg bg-[#00e290]/10 flex items-center justify-center text-[#00e290] font-bold text-sm">
-                SOL
-              </span>
-              <div>
-                <p className="text-[10px] font-bold uppercase tracking-wider text-on-surface-variant">Solana Telemetry volume</p>
-                <p className="text-sm font-black text-primary mt-0.5">🟢 ACCUMULATION BREAKOUT</p>
-              </div>
-            </div>
-          </div>
-        </section>
 
         {/* Fold 4: Platform Footer Component */}
-        <footer className="w-full bg-[#0b0e11] border-t border-outline-variant/20 pt-16 pb-8 px-8 mt-16 z-20 shrink-0">
+        <footer className="w-full bg-[#0b0c0e] border-t border-outline-variant/20 pt-16 pb-8 px-8 mt-16 z-20 shrink-0">
           <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-10">
             {/* Brand info */}
             <div className="flex flex-col gap-4">
               <div className="flex items-center gap-2">
-                <span className="text-xl font-black bg-gradient-to-r from-emerald-400 to-teal-300 bg-clip-text text-transparent font-display-lg tracking-wider">
+                <span className="text-xl font-black bg-gradient-to-r from-white to-gray-400 bg-clip-text text-transparent font-display-lg tracking-wider">
                   TradePulse
-                </span>
-                <span className="px-2 py-0.5 rounded-full text-[9px] font-bold bg-[#00ffa3]/10 text-[#00ffa3] border border-[#00ffa3]/20 font-data-mono">
-                  v1.2-AI
                 </span>
               </div>
               <p className="text-xs text-on-surface-variant leading-relaxed max-w-[240px]">
@@ -954,34 +518,34 @@ const Home = () => {
 
             {/* Links Column 1 */}
             <div className="flex flex-col gap-3">
-              <p className="text-xs font-bold text-primary uppercase tracking-widest text-[#00ffa3]">Explore</p>
+              <p className="text-xs font-bold text-primary uppercase tracking-widest text-white">Explore</p>
               <ul className="flex flex-col gap-2 text-xs text-on-surface-variant font-medium">
-                <li><a href="/" className="hover:text-[#00ffa3] transition-colors">Markets Terminal</a></li>
-                <li><a href="/portfolio" className="hover:text-[#00ffa3] transition-colors">My Portfolio</a></li>
-                <li><a href="/watchlist" className="hover:text-[#00ffa3] transition-colors">Active Watchlist</a></li>
-                <li><a href="/profile" className="hover:text-[#00ffa3] transition-colors">Trader Profile</a></li>
+                <li><a href="/" className="hover:text-white transition-colors">Markets Terminal</a></li>
+                <li><a href="/portfolio" className="hover:text-white transition-colors">My Portfolio</a></li>
+                <li><a href="/watchlist" className="hover:text-white transition-colors">Active Watchlist</a></li>
+                <li><a href="/profile" className="hover:text-white transition-colors">Trader Profile</a></li>
               </ul>
             </div>
 
             {/* Links Column 2 */}
             <div className="flex flex-col gap-3">
-              <p className="text-xs font-bold text-primary uppercase tracking-widest text-[#00ffa3]">Resources</p>
+              <p className="text-xs font-bold text-primary uppercase tracking-widest text-white">Resources</p>
               <ul className="flex flex-col gap-2 text-xs text-on-surface-variant font-medium">
-                <li><a href="#" className="hover:text-[#00ffa3] transition-colors">API Reference</a></li>
-                <li><a href="#" className="hover:text-[#00ffa3] transition-colors">AI Core Docs</a></li>
-                <li><a href="#" className="hover:text-[#00ffa3] transition-colors">Trading Tutorials</a></li>
-                <li><a href="/support" className="hover:text-[#00ffa3] transition-colors">Support Center</a></li>
+                <li><a href="#" className="hover:text-white transition-colors">API Reference</a></li>
+                <li><a href="#" className="hover:text-white transition-colors">AI Core Docs</a></li>
+                <li><a href="#" className="hover:text-white transition-colors">Trading Tutorials</a></li>
+                <li><a href="/support" className="hover:text-white transition-colors">Support Center</a></li>
               </ul>
             </div>
 
             {/* Links Column 3 */}
             <div className="flex flex-col gap-3">
-              <p className="text-xs font-bold text-primary uppercase tracking-widest text-[#00ffa3]">Legal</p>
+              <p className="text-xs font-bold text-primary uppercase tracking-widest text-white">Legal</p>
               <ul className="flex flex-col gap-2 text-xs text-on-surface-variant font-medium">
-                <li><a href="#" className="hover:text-[#00ffa3] transition-colors">Privacy Policy</a></li>
-                <li><a href="#" className="hover:text-[#00ffa3] transition-colors">Terms of Service</a></li>
-                <li><a href="#" className="hover:text-[#00ffa3] transition-colors">Risk Disclosure</a></li>
-                <li><a href="#" className="hover:text-[#00ffa3] transition-colors">AML Policy</a></li>
+                <li><a href="#" className="hover:text-white transition-colors">Privacy Policy</a></li>
+                <li><a href="#" className="hover:text-white transition-colors">Terms of Service</a></li>
+                <li><a href="#" className="hover:text-white transition-colors">Risk Disclosure</a></li>
+                <li><a href="#" className="hover:text-white transition-colors">AML Policy</a></li>
               </ul>
             </div>
           </div>
@@ -992,13 +556,13 @@ const Home = () => {
               © 2026 TradePulse. All rights reserved. Designed for elite cryptocurrency intelligence.
             </p>
             <div className="flex items-center gap-4">
-              <a href="#" className="text-on-surface-variant hover:text-[#00ffa3] transition-all hover:scale-110">
+              <a href="#" className="text-on-surface-variant hover:text-white transition-all hover:scale-110">
                 <span className="material-symbols-outlined text-lg">code</span>
               </a>
-              <a href="#" className="text-on-surface-variant hover:text-[#00ffa3] transition-all hover:scale-110">
+              <a href="#" className="text-on-surface-variant hover:text-white transition-all hover:scale-110">
                 <span className="material-symbols-outlined text-lg">terminal</span>
               </a>
-              <a href="#" className="text-on-surface-variant hover:text-[#00ffa3] transition-all hover:scale-110">
+              <a href="#" className="text-on-surface-variant hover:text-white transition-all hover:scale-110">
                 <span className="material-symbols-outlined text-lg">forum</span>
               </a>
             </div>
@@ -1007,7 +571,7 @@ const Home = () => {
       </div>
 
       {/* Floating Chat Bot Section */}
-      <section className="fixed bottom-6 right-6 md:bottom-8 md:right-8 z-[60] flex flex-col justify-end items-end gap-2">
+      <section className="fixed bottom-20 right-6 md:bottom-24 md:right-8 z-[60] flex flex-col justify-end items-end gap-2">
         {isBotRelease && (
           <div className="mb-4 rounded-2xl w-[20rem] md:w-[25rem] h-[55vh] bg-surface-container-low border border-outline-variant shadow-2xl flex flex-col overflow-hidden animate-fade-in-up">
             {/* Header */}
@@ -1033,10 +597,10 @@ const Home = () => {
             </div>
 
             {/* Conversation Messages */}
-            <div className="flex-1 overflow-y-auto gap-4 px-4 py-4 scroll-container flex flex-col bg-[#0b0e11]">
+            <div className="flex-1 overflow-y-auto gap-4 px-4 py-4 scroll-container flex flex-col bg-[#04090c]">
               <div className="self-start pb-2 w-auto max-w-[85%]">
                 <div className="px-4 py-2.5 rounded-2xl bg-surface-container-low text-primary text-xs border border-outline-variant/30">
-                  <p className="font-semibold text-emerald-400 mb-1">hi, {auth.user?.fullName}</p>
+                  <p className="font-semibold text-white mb-1">hi, {auth.user?.fullName}</p>
                   <p className="text-on-surface-variant leading-relaxed">
                     You can ask crypto related questions. How can I help you today?
                   </p>
@@ -1052,7 +616,7 @@ const Home = () => {
                   } pb-2 w-auto max-w-[85%]`}
                 >
                   {item.role === "user" ? (
-                    <div className="px-4 py-2 rounded-2xl bg-[#00ffa3] text-[#003920] text-xs font-semibold">
+                    <div className="px-4 py-2 rounded-2xl bg-white text-black text-xs font-semibold shadow-sm">
                       {item.prompt}
                     </div>
                   ) : (
@@ -1074,7 +638,7 @@ const Home = () => {
             {/* Input field */}
             <div className="p-3 border-t border-outline-variant bg-surface-container-low">
               <input
-                className="w-full bg-[#0b0e11] border border-outline-variant rounded-xl px-4 py-2 text-xs text-primary placeholder-on-surface-variant focus:outline-none focus:ring-1 focus:ring-surface-tint"
+                className="w-full bg-[#0b0c0e] border border-outline-variant rounded-xl px-4 py-2 text-xs text-primary placeholder-on-surface-variant focus:outline-none focus:ring-1 focus:ring-surface-tint"
                 placeholder="write prompt..."
                 onChange={handleChange}
                 value={inputValue}
@@ -1108,7 +672,7 @@ const Home = () => {
             <div className="flex items-start justify-between p-6 border-b border-outline-variant/20 bg-surface-container-high/40">
               <div className="pr-4">
                 <div className="flex items-center gap-3 mb-2">
-                  <span className={`px-2.5 py-0.5 rounded-full text-[9px] font-black uppercase tracking-wider border border-[#00ffa3]/10 ${selectedNews.tagColor}`}>
+                  <span className={`px-2.5 py-0.5 rounded-full text-[9px] font-black uppercase tracking-wider border border-white/10 ${selectedNews.tagColor}`}>
                     {selectedNews.tag}
                   </span>
                   <div className="flex items-center gap-2 text-[10px] text-on-surface-variant font-semibold">
@@ -1130,11 +694,11 @@ const Home = () => {
             </div>
 
             {/* Modal Body (Scrollable Article content) */}
-            <div className="flex-1 overflow-y-auto p-6 md:p-8 scroll-container bg-[#0b0e11] text-xs md:text-sm">
+            <div className="flex-1 overflow-y-auto p-6 md:p-8 scroll-container bg-[#04090c] text-xs md:text-sm">
               {/* Fake visual header or cover graphic */}
-              <div className="w-full h-32 md:h-40 rounded-xl bg-gradient-to-br from-[#00ffa3]/20 via-[#00ffa3]/5 to-transparent border border-outline-variant/30 flex flex-col justify-between p-4 mb-6 relative overflow-hidden">
-                <div className="absolute right-[-20%] bottom-[-20%] w-60 h-60 bg-[#00ffa3]/10 blur-3xl rounded-full pointer-events-none"></div>
-                <div className="flex items-center gap-2 text-[10px] font-bold text-[#00ffa3] font-data-mono bg-[#00ffa3]/10 w-fit px-2 py-0.5 rounded border border-[#00ffa3]/10">
+              <div className="w-full h-32 md:h-40 rounded-xl bg-gradient-to-br from-white/10 via-white/5 to-transparent border border-outline-variant/30 flex flex-col justify-between p-4 mb-6 relative overflow-hidden">
+                <div className="absolute right-[-20%] bottom-[-20%] w-60 h-60 bg-white/5 blur-3xl rounded-full pointer-events-none"></div>
+                <div className="flex items-center gap-2 text-[10px] font-bold text-white font-data-mono bg-white/10 w-fit px-2 py-0.5 rounded border border-white/15">
                   <ShieldCheck className="w-3.5 h-3.5" />
                   VERIFIED TRADE-PULSE INTEL
                 </div>
@@ -1189,18 +753,18 @@ const Home = () => {
             <div className="flex items-center justify-between p-4 border-t border-outline-variant/20 bg-surface-container-high/40">
               <div className="flex items-center gap-2">
                 <button className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold bg-surface-bright hover:bg-[#323538] text-primary transition-all border border-outline-variant/30">
-                  <Bookmark className="w-3.5 h-3.5 text-[#00ffa3]" />
+                  <Bookmark className="w-3.5 h-3.5 text-white" />
                   Bookmark
                 </button>
                 <button className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold bg-surface-bright hover:bg-[#323538] text-primary transition-all border border-outline-variant/30">
-                  <Share2 className="w-3.5 h-3.5 text-[#00ffa3]" />
+                  <Share2 className="w-3.5 h-3.5 text-white" />
                   Share Intel
                 </button>
               </div>
 
               <button
                 onClick={() => setIsNewsModalOpen(false)}
-                className="bg-[#00ffa3] hover:bg-[#00ffa3]/90 text-[#007146] font-bold text-xs px-5 py-2 rounded-xl transition-all shadow-md"
+                className="bg-white hover:bg-gray-200 text-black font-bold text-xs px-5 py-2 rounded-xl transition-all shadow-md"
               >
                 Close Article
               </button>

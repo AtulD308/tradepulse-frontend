@@ -112,6 +112,7 @@ dispatch(getUser(localStorage.getItem("jwt")))
             <Route element={<Auth />} path="/forgot-password" />
             <Route element={<LoginWithGoogle />} path="/login-with-google" />
             <Route element={<OAuthSuccess />} path="/oauth-success" />
+            <Route element={<Support />} path="/support" />
             <Route element={<ResetPasswordForm />} path="/reset-password/:session" />
             <Route element={<PasswordUpdateSuccess />} path="/password-update-successfully" />
             <Route element={<TwoFactorAuth />} path="/two-factor-auth/:session" />

@@ -75,7 +75,7 @@ export function AssetTable({ coins, category, selectedCoinId, onSelectCoin }) {
                 return (
                   <TableRow
                     className={`hover:bg-surface-bright/20 hover:scale-[1.002] transition-all duration-200 cursor-pointer group border-b border-outline-variant/15 ${
-                      isSelected ? "bg-surface-bright/40 border-[#00ffa3]/30 shadow-sm" : ""
+                      isSelected ? "bg-surface-bright/40 border-primary/30 shadow-sm" : ""
                     }`}
                     onClick={() => onSelectCoin?.(item.id)}
                     onDoubleClick={() => navigate(`/market/${item.id}`)}
@@ -100,7 +100,7 @@ export function AssetTable({ coins, category, selectedCoinId, onSelectCoin }) {
                           </div>
                         )}
                         <div>
-                          <span className="font-bold text-primary group-hover:text-[#00ffa3] transition-colors block">
+                          <span className="font-bold text-primary group-hover:text-white transition-colors block">
                             {item.name}
                           </span>
                           <span className="text-[10px] text-on-surface-variant uppercase font-data-mono block mt-0.5">

@@ -53,48 +53,48 @@
   }
  
   .dark {
-    --background: 224 71.4% 4.1%;
-    --foreground: 210 20% 98%;
+    --background: 200 40% 4.7%;
+    --foreground: 0 0% 100%;
  
-    --card: 224 71.4% 4.1%;
-    --card-foreground: 210 20% 98%;
+    --card: 210 17% 5.3%;
+    --card-foreground: 0 0% 90%;
  
-    --popover: 224 71.4% 4.1%;
-    --popover-foreground: 210 20% 98%;
+    --popover: 210 17% 5.3%;
+    --popover-foreground: 0 0% 90%;
  
-    --primary: 210 20% 98%;
-    --primary-foreground: 220.9 39.3% 11%;
+    --primary: 0 0% 100%;
+    --primary-foreground: 210 17% 5.3%;
  
-    --secondary: 215 27.9% 16.9%;
-    --secondary-foreground: 210 20% 98%;
+    --secondary: 240 5% 15%;
+    --secondary-foreground: 240 2% 90%;
  
-    --muted: 215 27.9% 16.9%;
-    --muted-foreground: 217.9 10.6% 64.9%;
+    --muted: 240 5% 15%;
+    --muted-foreground: 240 2% 70%;
  
-    --accent: 215 27.9% 16.9%;
-    --accent-foreground: 210 20% 98%;
+    --accent: 240 5% 15%;
+    --accent-foreground: 240 2% 90%;
  
-    --destructive: 0 62.8% 30.6%;
+    --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 20% 98%;
  
-    --border: 215 27.9% 16.9%;
-    --input: 215 27.9% 16.9%;
-    --ring: 216 12.2% 83.9%;
+    --border: 0 0% 100% / 0.05;
+    --input: 0 0% 100% / 0.05;
+    --ring: 0 0% 100% / 0.2;
 
     /* Dark Theme Custom Tokens */
-    --surface: 210 15% 8%;
-    --surface-container-lowest: 210 22% 5%;
-    --surface-container-low: 210 12% 11%;
-    --surface-container: 210 10% 13%;
-    --surface-container-high: 215 8% 17%;
-    --surface-container-highest: 210 6% 21%;
-    --surface-bright: 220 5% 23%;
-    --on-surface: 230 11% 89%;
-    --on-surface-variant: 136 14% 76%;
-    --outline: 138 9% 55%;
-    --outline-variant: 139 12% 26%;
+    --surface: 200 40% 4.7%;
+    --surface-container-lowest: 200 40% 4.7%;
+    --surface-container-low: 200 35% 4.3%;
+    --surface-container: 210 17% 5.3%;
+    --surface-container-high: 210 15% 6.5%;
+    --surface-container-highest: 210 15% 8.5%;
+    --surface-bright: 210 15% 8.5%;
+    --on-surface: 0 0% 95%;
+    --on-surface-variant: 0 0% 70%;
+    --outline: 0 0% 100% / 0.15;
+    --outline-variant: 0 0% 100% / 0.05;
     --inverse-surface: 0 0% 100%;
-    --inverse-on-surface: 210 10% 11%;
+    --inverse-on-surface: 200 40% 4.7%;
   }
 }
  
@@ -183,15 +183,15 @@
 }
 
 .chart-glow {
-  filter: drop-shadow(0 0 12px rgba(0, 226, 144, 0.6));
+  filter: drop-shadow(0 0 12px rgba(255, 255, 255, 0.1));
 }
 
 .price-up {
-  color: #00e290 !important;
+  color: #10b981 !important;
 }
 
 .price-down {
-  color: #ffb4ab !important;
+  color: #f87171 !important;
 }
 
 /* Ambient Background Glow */
@@ -201,7 +201,7 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background: radial-gradient(circle at 50% 50%, rgba(0, 226, 144, 0.05) 0%, transparent 70%);
+  background: radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.01) 0%, transparent 70%);
   pointer-events: none;
   z-index: -1;
 }
@@ -213,7 +213,7 @@
 }
 
 .mouse-glow-element {
-  background: radial-gradient(400px circle at var(--mouse-x) var(--mouse-y), rgba(0, 226, 144, 0.08), transparent 80%);
+  background: radial-gradient(400px circle at var(--mouse-x) var(--mouse-y), rgba(255, 255, 255, 0.02), transparent 80%);
 }
 
 /* Scanline Shimmer Effect for Chart */
@@ -223,7 +223,7 @@
   left: 0;
   width: 50%;
   height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(0, 226, 144, 0.05), transparent);
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.015), transparent);
   pointer-events: none;
 }
 
